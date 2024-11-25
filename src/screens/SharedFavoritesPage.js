@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './SharedFavoritesPage.module.css';
 
+const ITEMS_PER_PAGE = 10; // Number of items per page
+
 const SharedFavoritesPage = () => {
-  const { userId } = useParams(); // Get the userId from the URL
+  const { userId } = useParams();
   const [favorites, setFavorites] = useState([]);
-  const navigate = useNavigate(); // Initialize navigate
+  const [currentPage, setCurrentPage] = useState(1); // State for current page
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchSharedFavorites() {
@@ -13,7 +16,6 @@ const SharedFavoritesPage = () => {
         const response = await fetch(`http://localhost:3001/api/favorites/shared-favorites/${userId}`);
         const data = await response.json();
 
-        // Fetch detailed data for each favorite item
         const itemDetails = await Promise.all(
           data.map(async ({ id, type }) => {
             const endpoint =
@@ -23,11 +25,11 @@ const SharedFavoritesPage = () => {
 
             const response = await fetch(endpoint);
             const details = await response.json();
-            return { ...details, type }; // Attach the type to the data
+            return { ...details, type };
           })
         );
 
-        setFavorites(itemDetails); // Store the detailed items
+        setFavorites(itemDetails);
       } catch (error) {
         console.error('Error fetching shared favorites:', error);
       }
@@ -36,25 +38,38 @@ const SharedFavoritesPage = () => {
     fetchSharedFavorites();
   }, [userId]);
 
-  // Handle card click to redirect to the details page
+  // Calculate the range of items to display
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const visibleFavorites = favorites.slice(startIndex, endIndex); // Items for the current page
+
+  // Calculate total pages
+  const totalPages = Math.ceil(favorites.length / ITEMS_PER_PAGE);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Handle card click
   function handleCardClick(item) {
     if (item.type === 'movie') {
-      navigate(`/detail/movie/${item.id}`); // Redirect to movie details page
+      navigate(`/detail/movie/${item.id}`);
     } else if (item.type === 'tv') {
-      navigate(`/detail/tv/${item.id}`); // Redirect to TV series details page
+      navigate(`/detail/tv/${item.id}`);
     }
   }
 
   return (
     <div className={styles.sharedFavoritesContainer}>
-      <h1 className={styles.title}>Shared Favorites of user {userId} </h1>
-      {favorites.length > 0 ? (
+      <h1 className={styles.title}>Shared Favorites of user {userId}</h1>
+      {visibleFavorites.length > 0 ? (
         <div className={styles.favoritesGrid}>
-          {favorites.map((item) => (
+          {visibleFavorites.map((item) => (
             <div
               key={item.id}
               className={styles.favoriteCard}
-              onClick={() => handleCardClick(item)} // Add click handler
+              onClick={() => handleCardClick(item)}
             >
               <img
                 src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
@@ -68,6 +83,21 @@ const SharedFavoritesPage = () => {
         </div>
       ) : (
         <p>No favorites available.</p>
+      )}
+
+      {/* Pagination Controls */}
+      {favorites.length > ITEMS_PER_PAGE && (
+        <div className={styles.pagination}>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => handlePageChange(i + 1)}
+              className={`${styles.pageButton} ${currentPage === i + 1 ? styles.activePage : ''}`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );

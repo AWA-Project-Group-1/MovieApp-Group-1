@@ -174,3 +174,33 @@
   background-color: #18bc1e;
   transform: translateY(1px);
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.pageButton {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pageButton:hover {
+  background-color: #ddd;
+  transform: translateY(-1px);
+}
+
+.activePage {
+  background-color: #333;
+  color: #fff;
+  font-weight: bold;
+  transform: translateY(-1px);
+}
