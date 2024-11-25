@@ -192,15 +192,3 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
-
-.pageButton:hover {
-  background-color: #ddd;
-  transform: translateY(-1px);
-}
-
-.activePage {
-  background-color: #333;
-  color: #fff;
-  font-weight: bold;
-  transform: translateY(-1px);
-}

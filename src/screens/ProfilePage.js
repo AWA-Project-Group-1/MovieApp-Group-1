@@ -88,23 +88,17 @@ const Profile = () => {
         <div className={styles.profileDetails}>
           <div>
             <label>Name:</label>
-            <span>John Doe</span>
+            <span>Placeholder</span>
           </div>
           <div>
             <label>Email:</label>
-            <span>john.doe@example.com</span>
+            <span>Placeholder@example.com</span>
           </div>
         </div>
         <div className={styles.shareableLinkContainer}>
-          <label>Share your favorites:</label>
-          <input
-            type="text"
-            value={shareableLink}
-            readOnly
-            className={styles.shareableLinkInput}
-          />
+          
           <button onClick={copyToClipboard} className={styles.copyButton}>
-            Copy Link
+            Copy Link to share favorites
           </button>
         </div>
       </div>
