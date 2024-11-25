@@ -1,5 +1,9 @@
 .sharedFavoritesContainer {
     padding: 20px;
+    margin-bottom: 20px;
+  }
+  .title {
+    margin-bottom: 50px;
   }
   
   .favoritesGrid {

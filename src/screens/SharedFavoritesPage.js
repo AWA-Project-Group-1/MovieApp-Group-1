@@ -47,7 +47,7 @@ const SharedFavoritesPage = () => {
 
   return (
     <div className={styles.sharedFavoritesContainer}>
-      <h1>Shared Favorites of user {userId} </h1>
+      <h1 className={styles.title}>Shared Favorites of user {userId} </h1>
       {favorites.length > 0 ? (
         <div className={styles.favoritesGrid}>
           {favorites.map((item) => (
