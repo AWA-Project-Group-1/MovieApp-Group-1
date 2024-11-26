@@ -46,7 +46,7 @@ const Profile = () => {
       await removeFromFavorites(movieId);
       setFavorites(favorites.filter((item) => item.movie_id !== movieId));
       setFavoriteDetails(favoriteDetails.filter((item) => item.id !== movieId));
-      alert('Item removed from favorites!');
+      
     } catch (error) {
       console.error('Error removing item from favorites:', error);
     }

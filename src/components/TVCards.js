@@ -53,7 +53,6 @@ const TVCards = ({ movieCards }) => {
           setFavorites((prevFavorites) =>
             prevFavorites.filter((id) => id !== tvId)
           );
-          alert('TV show removed from favorites!');
         })
         .catch((error) => console.error('Error removing TV show from favorites:', error));
     } else {

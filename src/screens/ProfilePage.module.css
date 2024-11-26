@@ -8,6 +8,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 600px;
+  gap: 20px;
   margin: 50px auto;
 }
 
@@ -51,10 +52,13 @@
 }
 
 .moviesContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 20px; 
+  padding: 20px; 
+  justify-content: center; 
+  margin: 0 auto; 
+  max-width: calc(5 * 220px + 4 * 20px); 
 }
 
 .movieCard {
@@ -80,6 +84,22 @@
   border-radius: 5px;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.border-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  box-sizing: border-box;
+  border-left: 15px solid #333; 
+  border-right: 15px solid #333; 
+  border-bottom: 15px solid #333;
+}
+
 .removeButton {
   margin-top: 10px;
   background-color: #e74c3c;
@@ -94,6 +114,7 @@
 .removeButton:hover {
   background-color: #c0392b;
 }
+
 
 .tabContainer {
   display: flex;
@@ -178,14 +199,16 @@
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px auto; 
   gap: 10px;
+  max-width: 60px; 
+  padding: 10px 0; 
 }
 
 .pageButton {
   padding: 10px 15px;
   font-size: 16px;
-  background-color: #ccc;
+  background-color: #f23030;
   color: #333;
   border: none;
   border-radius: 5px;
