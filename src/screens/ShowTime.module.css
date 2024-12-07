@@ -1,295 +1,162 @@
-.all-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0px;
-}
-
-.navigation-hero-container {
-  width: 100%;
-}
-
-/* Filter Section */
-.filter-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
- 
-
-  gap: 20px;
-  width: 100%;
-  margin-bottom: 20px;
-  background: linear-gradient(to right, #95d2d8, #65a1a8, #4a8d99, #2a6573);
-  /* border: solid; */
-}
-
-.theater-container, .movie-container, .date-container, .fetch-showtime-container {
-  flex: 1 1 calc(25% - 20px); /* 4 filters in one row */
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-  align-items: center;
-  /* border: solid; */
-  margin: 0;
-  padding: 10px;
-}
-.fetch-showtime-container { 
-  padding-left: 30px;
-  padding-right: 30px;
-  
-
-}
-
-.fetch-showtime-container button{ 
-  background-color: #a0183c;
-  
-
-}
-
-
-.theater-container, .movie-container, .date-container, .fetch-showtime-container label{
-   /* margin-bottom: 30px; */
-   padding: 0;
-}
-
-
-@media (max-width: 1024px) {
-  .theater-container, .movie-container, .date-container, .fetch-showtime-container{
-      flex: 1 1 calc(50% - 20px); /* 2 filters in one row */
-  }
-}
-
-@media (max-width: 768px) {
-  .theater-container, .movie-container, .date-container, .fetch-showtime-container {
-      flex: 1 1 100%; /* 1 filter per row */
-  }
-}
-
-/* Today's Show in Oulu */
-.show-container {
-  display: flex;
-
-  flex-wrap: wrap;
-  gap: 20px;
-  width: 100%;
-  margin: 0;
-  padding: 10px;
-}
-
-.movie-card {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  padding: 15px;
-  gap: 15px;
-  flex: 1 1 calc(50% - 20px); 
-  min-height: 350px;
-  background-color: #95d2d8;
+/* .show-time-container {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    align-items: center;
 }
 
 .show-left {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.show-left1 {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.image-container {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-}
-.image-container1 {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-}
+    flex:1;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    flex-shrink: 0;
+    width: 150px; /* Fixed width for the left side */
+/* } */
 
-.show-image {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.status-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 12px;
+/* .show-image {
+    width: 200px;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 .show-right {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
+    /* display: flex; */
+    /* flex:2;
+    flex-direction: column;
+    justify-content: center;
+} */
+
+/* h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    text-align: center;
+}
+
+p {
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+a {
+    color: #0073e6;
+    text-decoration: none;
+} */
+
+/* a:hover {
+    text-decoration: underline;
 }
 
 
-
-.show-right1 {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-}
-
-.show-right ul {
-  max-height: 150px; /* Adjust as needed */
-  overflow-y: auto; /* Enable vertical scrolling */
-  padding: 10px;
-  margin: 0;
-  list-style: none;
-  background-color:lightgray;
-  border-radius: 5px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-  /* border: solid;
-  border-color: #65a1a8; */
-}
-.show-right1 ul {
-  max-height: 150px; /* Adjust as needed */
-  overflow-y: auto; /* Enable vertical scrolling */
-  padding: 10px;
-  margin: 0;
-  list-style: none;
-  background-color:lightgray;
-  border-radius: 5px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-  /* border: solid;
-  border-color: #65a1a8; */
-}
-
-.show-right ul li {
-  margin-bottom: 10px;
-}
-.show-right1 ul li {
-  margin-bottom: 10px;
-}
-
-.show-right ul::-webkit-scrollbar {
-  width: 8px;
-}
-.show-right1 ul::-webkit-scrollbar {
-  width: 8px;
-}
-
-.show-right ul::-webkit-scrollbar-thumb {
-  background-color: #95d2d8; /* Match theme color */
-  border-radius: 5px;
-}
-.show-right1 ul::-webkit-scrollbar-thumb {
-  background-color: #95d2d8; /* Match theme color */
-  border-radius: 5px;
-}
-
-.show-right ul::-webkit-scrollbar-track {
-  background: gray;
-  border-radius: 5px;
-}
-.show-right1 ul::-webkit-scrollbar-track {
-  background: gray;
-  border-radius: 5px;
-}
-.buy-ticket-button{
-color:  #f23030;
-}
-.buy-ticket-button:hover{
-  color:#a0183c
-  }
+ */ 
 
 
-@media (max-width: 1024px) {
-  .movie-card {
-      flex: 1 1 100%; 
-  }
-  .searched-movie-card{
-    flex: 1 1 100%; 
-  }
+/* Container for each show item */
+.show-time-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: box-shadow 0.3s, transform 0.3s;
 }
 
-
-/* Searched Results */
-.searched-container {
-  width: 100%;
-  margin-top: 20px;
+.show-time-container:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
 }
 
-
-.searched-show-container {
-  display: flex;
-
-  flex-wrap: wrap;
-  gap: 20px;
-  width: 100%;
-  margin: 0;
-  padding: 10px;
-}
-@media (min-width: 820x) {
-  .searched-show-container {width: 50%;}
-  
-}
-.searched-movie-card {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  padding: 15px;
-  gap: 15px;
-  flex: 1 1 calc(50% - 20px); /* 2 cards per row on large screens */
-  min-height: 150px;
-  background-color: #95d2d8;
+/* Left section with image */
+.show-left {
+    flex: 0 0 150px;
+    margin-right: 20px;
 }
 
-.show-image1 {
-  height: 100%;
-  border-radius: 10px;
-}
-.pagination-controls {
-  display: flex;
-  justify-content: center; /* Center the pagination buttons */
-  align-items: center;
-  margin-top: 20px; 
-  margin-bottom: 20px; 
-}
-.pagination-controls button {
-  padding: 10px 20px;
-  margin: 0 10px; /* Add spacing between buttons */
-  background-color:  #f23030;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100px;
-  transition: background-color 0.1s;
+.show-image {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
 }
 
-.pagination-controls button:disabled {
-  background-color: #d3d3d3;
-  cursor: not-allowed;
+/* Right section with details */
+.show-right {
+    flex: 1;
 }
 
-.pagination-controls button:hover:not(:disabled) {
-  background-color:#a0183c;
+.show-right h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin: 10px 0;
 }
 
-.pagination-controls span {
-  font-size: 16px;
-  margin: 0 10px;
-  font-weight: bold;
+.show-right p {
+    margin: 5px 0;
+    font-weight: bold;
+    color: #444;
 }
+
+.show-right p::before {
+    content: "🕒 ";
+}
+
+/* Buy Ticket button */
+.buy-ticket-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0073e6;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.buy-ticket-button:hover {
+    background-color: #005bb5;
+}
+
+/* Status badge */
+.status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.navigation-hero-container {
+    background-color: black;
+}
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .show-time-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .show-left {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .show-image {
+        width: 100%;
+        height: auto;
+    }
+}
+
 

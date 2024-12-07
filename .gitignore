@@ -21,10 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-#client side
-.env
-
-#serverside
-/backend/node_modules
-/server/node_modules

@@ -1,11 +1,9 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import useUser from "../context/useUser";
 
-function ProtectedRoute({ user, children }) {
-  if (!user || !user.token) {
-    return <Navigate to="/" />;
-  }
-  return children;
+export default function ProtectedRoute() {
+    const { user } = useUser();
+    if (!user || !user.token) return <Navigate to="/signin" />;
+    return <Outlet />;
 }
-
-export default ProtectedRoute;

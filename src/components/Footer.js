@@ -1,119 +1,78 @@
-import React from "react";
-import styles from "./Footer.module.css";  // Import the CSS module
-import logo from "../assets/images/movieapplogo.jpg";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import { Link } from "react-router-dom";  // Import Link from react-router-dom
-
+// import facebook-icon from "../"
+import React from 'react';
+import facebookicon from "../assets/images/facebookicon.png"
+import instagramicon from "../assets/images/instagramicon.jfif"
+import twitericon from "../assets/images/twitericon.png"
+import styles from "./Footer.module.css";
 const Footer = () => {
-
-  // Function to scroll the page to the top
-  const scrollToTop = () => {
-    window.scrollTo(0, 0); // Scrolls to the top of the page
-  };
-
   return (
-    <footer className="text-center text-lg-start text-muted" style={{ backgroundColor: '#f4f4f9', marginTop: '100px', width: '100%', transition: 'background-color 0.2s ease, margin-top 0.2s ease' }}>
+    <div>
 
-      {/* Content Section */}
-      <section className="">
-        <div className="container text-md-start mt-5 ml-5" style={{ paddingTop: '20px', paddingBottom: '30px' }}>
-          <div className="row mt-3">
-            {/* Company Section (Logo Column) */}
-            <div className={`col-md-6 col-lg-6 col-xl-6 mx-auto mb-4 ${styles.footerColumn} d-flex justify-content-center`}>
-              <div className="text-center">
-                <img src={logo} alt="Logo" className={styles.footerLogo} />
-                <div>
-                  <p className={styles.footerDetailText}>
-                    Discover, review, and share movies and TV shows with our community-driven platform. Powered by TMDB and Finnkino open data, we provide a rich, up-to-date database to enhance your cinematic experience. Learn more about our platform and features in the About section.
-                  </p>
-                </div>
+        <div className={`${styles['footer-container']} ${styles.container}`}>
+          <footer className="py-5">
+            <div className="row">
+              <div className="col-6 col-md-2 mb-3">
+                <h5>Section</h5>
+                <ul className="nav flex-column">
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Home</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Features</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Pricing</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">FAQs</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">About</a></li>
+                </ul>
+              </div>
+        
+              <div className="col-6 col-md-2 mb-3">
+                <h5>Section</h5>
+                <ul className="nav flex-column">
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Home</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Features</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Pricing</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">FAQs</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">About</a></li>
+                </ul>
+              </div>
+        
+              <div className="col-6 col-md-2 mb-3">
+                <h5>Section</h5>
+                <ul className="nav flex-column">
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Home</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Features</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">Pricing</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">FAQs</a></li>
+                  <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-body-secondary">About</a></li>
+                </ul>
+              </div>
+        
+              <div className="col-md-5 offset-md-1 mb-3">
+                <form>
+                  <h5>Subscribe to our newsletter</h5>
+                  <p>Monthly digest of what's new and exciting from us.</p>
+                  <div className="d-flex flex-column flex-sm-row w-100 gap-2">
+                    <label for="newsletter1" className="visually-hidden">Email address</label>
+                    <input id="newsletter1" type="text" className="form-control" placeholder="Email address"/>
+                    <button className="btn btn-primary" type="button">Subscribe</button>
+                  </div>
+                </form>
               </div>
             </div>
+        
+            
 
-            {/* General Section */}
-            <div className={'col-md-1 col-lg-1 col-xl-1 mx-auto'} >
-              <h6 className={`text-uppercase fw-bold mb-3 mt-2 ${styles.footerHeading}`}>General</h6>
-              <p className={styles.footerText}>
-                <Link to="/" className={`text-reset ${styles.footerLink}`} onClick={scrollToTop}>Home</Link>
-              </p>
-              <p className={styles.footerText}>
-                <Link to="/about" className={`text-reset ${styles.footerLink}`} onClick={scrollToTop}>About</Link>
-              </p>
-              <p className={styles.footerText}>
-                <Link to="/" className={`text-reset ${styles.footerLink}`} onClick={scrollToTop}>Privacy Policy</Link>
-              </p>
-              <p className={styles.footerText}>
-                <Link to="/" className={`text-reset ${styles.footerLink}`} onClick={scrollToTop}>Terms of Service</Link>
-              </p>
+            <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+              <p className="mb-0 flex-grow-1">© 2024 Stitch & Thread. All rights reserved.</p>
+              {/* <ul className="socialmedia d-flex list-unstyled mb-0"> */}
+              <ul className={`${styles.socialmedia} d-flex list-unstyled mb-0`} >
+                  <li className="ms-3"><a className="link-body-emphasis" href="https://twitter.com/yourprofile"><img src={twitericon} alt="Twitter"/></a></li>
+                  <li className="ms-3"><a className="link-body-emphasis" href="https://instagram.com/yourprofile"><img src={instagramicon} alt="Instagram"/></a></li>
+                  <li className="ms-3"><a className="link-body-emphasis" href="https://facebook.com/yourprofile"><img src={facebookicon} alt="Facebook"/></a></li>
+              </ul>
             </div>
+          </footer>
+        </div>             
+      
+    </div>
+  )
+}
 
-            {/* Social Media Follow Section */}
-            <div className={'col-md-1 col-lg-1 col-xl-1 mx-auto '} >
-              <h6 className={`text-uppercase fw-bold mb-3 mt-2 ${styles.footerHeading}`}>Follow Us</h6>
-              <p className={styles.footerText}>
-                <a href="https://www.facebook.com" className={`text-reset ${styles.footerLink}`} target="_blank" rel="noopener noreferrer">
-                  <i className="bi bi-facebook me-2"></i>Facebook
-                </a>
-              </p>
-              <p className={styles.footerText}>
-                <a href="https://www.twitter.com" className={`text-reset ${styles.footerLink}`} target="_blank" rel="noopener noreferrer">
-                  <i className="bi bi-twitter me-2"></i>Twitter
-                </a>
-              </p>
-              <p className={styles.footerText}>
-                <a href="https://www.instagram.com" className={`text-reset ${styles.footerLink}`} target="_blank" rel="noopener noreferrer">
-                  <i className="bi bi-instagram me-2"></i>Instagram
-                </a>
-              </p>
-            </div>
-
-            {/* Contact Section */}
-            <div className={'col-md-2 col-lg-2 col-xl-2 mx-auto '} >
-              <h6 className={`text-uppercase fw-bold mb-3 mt-2 ${styles.footerHeading}`}>Contact Us</h6>
-              <p className={styles.footerText}>
-                <i className="bi bi-telephone me-2"></i>+358 xxxxxx
-              </p>
-              <p className={styles.footerText}>
-                <i className="bi bi-envelope me-2"></i>contact@nordflix.com
-              </p>
-              <p className={styles.footerText}>
-                <i className="bi bi-geo-alt me-2"></i>Yliopistokatu 990570 Oulu, FI
-              </p>
-            </div>
-
-            {/* Newsletter Subscription Section
-            <div className={'col-md-3 col-lg-3 col-xl-3 mx-auto '} >
-              <h6 className={`text-uppercase fw-bold mb-3 mt-2 ${styles.footerHeading}`}>Subscribe to Our Newsletter</h6>
-              <p className={styles.footerText}>
-                Stay updated with our latest news and offers. Subscribe to our newsletter!
-              </p>
-              <form>
-                <div className="input-group">
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter your email"
-                    required
-                    aria-label="Email address"
-                  />
-                  <button type="submit" className="btn btn-primary">
-                    Subscribe
-                  </button>
-                </div>
-              </form>
-            </div> */}
-
-          </div>
-        </div>
-      </section>
-
-      {/* Copyright Section */}
-      <div className="text-center p-3" style={{ backgroundColor: '#6d6d6e', color: '#f4f4f9' }}>
-        © 2024 NordFlix. All rights reserved.
-      </div>
-
-    </footer>
-  );
-};
-
-export default Footer;
+export default Footer

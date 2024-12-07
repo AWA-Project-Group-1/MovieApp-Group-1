@@ -1,0 +1,270 @@
+.nav-herosection {
+    background-color:white;
+    /* border: 2px solid rgb(223, 200, 200); Temporary for debugging */
+}
+
+.movie_framework {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 60px;
+    gap: 30px;
+    background-color: #f4f4f4;
+    margin-top: 20px;
+  }
+  
+  .movie_framework img {
+    flex: 1;
+    height: 400px;
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+  }
+  
+  .information_container {
+    flex: 2;
+    max-width: 600px;
+  }
+  
+  .information_container h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    font-weight: bold;
+  }
+  
+  .information_container p {
+    font-size: 1.1rem;
+    margin: 5px 0;
+    color: #333;
+  }
+  
+  .information_container p span {
+    font-weight: bold;
+  }
+  
+  .movie_framework p {
+    line-height: 1.5;
+  }
+  
+  .movie_framework .genres {
+    margin-top: 10px;
+    color: #888;
+  }
+  
+  .movie_framework .rating {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #ff8c00;
+  }
+  .nav-hero-container {
+    background-color: black;
+  }
+
+  .movie_framework img {
+    flex: 1;
+    height: 400px;  /* You can adjust the height as needed */
+    width: 100%;  /* Make the image fill the width of its container */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    object-fit: contain;  /* Change from cover to contain */
+  }
+  .seasons-pictures-container {
+    flex:1;
+  }
+.poster-container {
+    width: 200px;
+    height:200px;
+}
+
+/* for the actor display */
+.cast-list {
+    display: flex;          /* Use Flexbox to display items in a row */
+    flex-wrap: wrap;        /* Allow wrapping to the next line if there are too many items */
+    gap: 16px;              /* Space between each item */
+    list-style: none;       /* Remove bullet points from list items */
+    padding: 0;
+    margin: 0;
+}
+
+.cast-item {
+    display: flex;
+    flex-direction: column; /* Stack the name and image vertically */
+    align-items: center;    /* Center-align content within each item */
+    text-align: center;
+    width: 120px;           /* Set a width for each cast item */
+}
+
+.poster-container {
+    width: 100px;           /* Set image width */
+    height: auto;           /* Maintain image aspect ratio */
+    border-radius: 8px;     /* Optional: add rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add shadow */
+}
+
+/* for the crew and cast container */
+/* Container for the cast section */
+.cast-container {
+    margin-bottom: 1rem;
+    margin-left: 100px;
+
+}
+.cast-container h2{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+/* Navigation container for left/right buttons and scrollable content */
+.cast-nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Button styles for arrows */
+.arrow-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: opacity 0.3s ease;
+}
+
+.arrow-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Scrollable container for the cast */
+.cast-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    width: 80%; /* Adjust this width based on your layout */
+    padding: 1rem;
+    margin: 0 1rem;
+    justify-content: flex-start;
+}
+
+/* List of cast items (horizontal layout) */
+.cast-list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: nowrap;
+}
+
+
+/* Actor's name and character style */
+.actor-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+
+.cast-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.cast-item {
+    flex-shrink: 0;
+    width: 150px; /* Adjust this as needed */
+    text-align: center;
+    /* border: solid; */
+}
+.cast-item p {
+    color:black;
+}
+.poster-container {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    /* Add other styles for your image as necessary */
+}
+
+
+/* Scrollable container for the cast */
+.cast-scroll-container {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    width: 100%;      /* Make it take the full width of its parent */
+    padding: 1rem 0;  /* Optional: add padding on top and bottom */
+    margin: 0 1rem;   /* Optional: margin on the sides */
+}
+
+/* List of cast items (horizontal layout) */
+.cast-list {
+    display: flex;
+    gap: 16px;           /* Space between each cast item */
+    flex-wrap: nowrap;    /* Prevent items from wrapping onto the next row */
+}
+
+/* Individual cast items */
+.cast-item {
+    flex-shrink: 0;      
+    width: 150px;  
+    /* height: 900px;       */
+    text-align: center; 
+}
+
+/* Actor's profile image styling */
+.poster-container {
+    width: 100%;        
+    height: auto;        
+    border-radius: 8px;   
+}
+
+.crew-container {
+    margin-bottom: 2rem;
+    margin-left: 100px;
+}
+.crew-list {
+    display: flex;          /* Use Flexbox to display items in a row */
+    flex-wrap: wrap;        /* Allow wrapping to the next line if there are too many items */
+    gap: 16px;              /* Space between each item */
+    list-style: none;       /* Remove bullet points from list items */
+    padding: 0;
+    margin: 0;
+}
+
+.crew-item {
+    flex-shrink: 0;      
+    width: 150px;        
+    text-align: center;       
+    border-radius: 8px;
+    background-color: lightgray;
+    
+}
+
+/* List of cast items (horizontal layout) */
+.crew-list {
+    display: flex;
+    gap: 16px;           /* Space between each cast item */
+    flex-wrap: nowrap;    /* Prevent items from wrapping onto the next row */
+}
+
+.crew-scroll-container {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    width: 100%;      /* Make it take the full width of its parent */
+    padding: 1rem 0;  /* Optional: add padding on top and bottom */
+    margin: 0 1rem;   /* Optional: margin on the sides */
+}
+
+.crew-item p {
+    color:black;
+    margin-bottom: 20px;
+}
+.crew-item p :hover {
+    border: solid;
+    border-color: #dc1515;
+ 
+}
+
+.crew-item:hover {
+    border: solid;
+    border-color: #dc1515;}

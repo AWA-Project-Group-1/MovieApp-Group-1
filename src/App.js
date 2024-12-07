@@ -1,9 +1,10 @@
 // App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import MovieDetails from './screens/MovieDetailsPage';
-// import AllMovies from './screens/AllMovies';
+//import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import HomePage from './screens/HomePage';
+//import Group from './screens/Group';
 import './App.css';
 
 
@@ -21,6 +22,9 @@ import { MovieGenreProvider } from "./context/MovieGenreProvider.js"
 import Profile from './screens/ProfilePage.js';
 import SharedFavoritesPage from './screens/SharedFavoritesPage.js';
 import UserListPage from './screens/UserListPage';
+import Group from './screens/Group.js';
+import GroupDetails from './screens/GroupDetails.js';
+
 // import TVGenreProvider from "./context/TVGenreProvider.js"
 
 
@@ -59,6 +63,8 @@ const App = () => (
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/about" element={<About />} />
+              <Route path="/group" element={<Group />} />
+              <Route path="/group/:id" element={<GroupDetails />} />
 
             </Routes>
           </Router>

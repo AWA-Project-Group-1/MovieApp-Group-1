@@ -1,68 +1,32 @@
 
-import React, { useContext,useState, useEffect} from 'react';
-import { Link  } from "react-router-dom";
+import React, {useContext} from 'react';
 import styles from "./HeroSection.module.css";
-// import { TVSeriesContext } from '../context/TVSeriesProvider';
-import { MoiveTVSerialContext } from "../context/MoiveTVSerialProvider"
+import { TVSeriesContext } from '../context/TVSeriesProvider';
 
-const HeroSection = ({type}) => {
-  const moiveTVSerialData = useContext(MoiveTVSerialContext) 
-  // const { tvormovie } = useParams();
-  // console.log(`This is the ${tvormovie}`); 
-  // console.log("Params object:", useParams());
 
- 
+const HeroSection = () => {
+  const tvSeriesData = useContext(TVSeriesContext);
+  const mostPopularSeries = tvSeriesData.reduce((prev, current) => {
+    return prev.popularity > current.popularity ? prev : current;
+  }, {});
 
-  const backgroundImageforTV = moiveTVSerialData.tvSeries?.map(series => 
-    `https://image.tmdb.org/t/p/original${series.backdrop_path}`
-  ) || [];
-  const backgroundImageforMovie = moiveTVSerialData.movies?.map(movie => 
-    `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
-  ) || [];
- 
-  
+  // const mostPopularSeries = tvSeriesData.filter(item = >)
 
-    //   : "";
-    const images = type === "tvserial" ? backgroundImageforTV  : backgroundImageforMovie;
+  // Construct the background image URL
+  const backgroundImage = mostPopularSeries?.backdrop_path 
+    ? `https://image.tmdb.org/t/p/original${mostPopularSeries.backdrop_path}` 
+    : '';
 
-    // State to track the current image index
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-    // Automatically cycle through images
-    useEffect(() => {
-      if (images.length > 0) {
-        const interval = setInterval(() => {
-          setCurrentImageIndex(prevIndex => (prevIndex + 1) % images.length);
-        }, 4000); 
-  
-        return () => clearInterval(interval); // Cleanup on component unmount
-      }
-    }, [images]);
-  
-    // Get the current background image
-    const currentImage = images[currentImageIndex];
-    
-      return (
-        <div
-          className={`${styles["hero-section"]} text-center py-5`}
-          style={{
-            backgroundImage: `url(${currentImage})`,
-            // width: "100%", 
-            // height: "100%",
-            // objectFit: "contain",
-            backgroundSize: "cover",
-            // backgroundRepeat: "no-repeat",
-            backgroundPosition: "center 20%",
-            // backgroundPosition: "center",
-            transition: "background-image 0.5s ease-in-out",
-          }}
-        >
-          <div className={styles["hero-content"]}>
-            <h1>Discover Your {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
-            <h4>Explore the top-rated and latest {type} shows!</h4>
-          </div>
-        </div>
-      );
-    };
-    
-    export default HeroSection;
+  return (
+    <div className={`${styles['hero-section']} text-center py-5`} style={{ 
+      backgroundImage: `url(${backgroundImage})`}}>
+      <div className={styles['hero-content']}>
+        <h1>Discover Your Movies</h1>
+        <p>Explore the top-rated and latest movies and TV shows!</p>
+        <a href="/movies" className="btn btn-primary mx-2">See More</a>
+      </div>
+    </div>
+  );
+};
+
+export default HeroSection;

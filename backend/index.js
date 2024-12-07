@@ -3,8 +3,12 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import favoriteRouter from './routers/favoriteRouter.js';
-import reviewsRouter from './routers/reviewRouter.js'
+import reviewsRouter from './routers/reviewRouter.js';
 import authRouter from './routers/authRouter.js';
+import groupRouter from './routers/groupRouter.js';
+import groupContentRouter from './routers/groupContentRouter.js';
+import groupMemberRouter from './routers/groupMemberRouter.js';
+import groupOwnerRouter from './routers/groupOwnerRouter.js';
 import { pool } from './helpers/db.js'; // Optional: test database connection on startup
 
 dotenv.config();
@@ -31,10 +35,15 @@ pool.query('SELECT NOW()', (err, res) => {
 });
 
 // Routes
+//app.use('/user', userRouter);
 app.use("/api/auth", authRouter);
 app.use('/api/favorites', favoriteRouter);
 // Use the reviews router for /reviews endpoint
 app.use('/api/reviews', reviewsRouter);
+app.use('/', groupRouter);
+app.use('/content', groupContentRouter);
+app.use('/manage', groupMemberRouter);
+app.use('/manage', groupOwnerRouter);
 
 
 // Fallback route for 404 errors

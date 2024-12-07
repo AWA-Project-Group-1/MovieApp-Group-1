@@ -4,12 +4,11 @@
     /* Remove default underline from Link */
     color: black;
     /* Set text color to black */
-    margin-right: 30px;
 }
 
 .view-all-button span {
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     transition: text-decoration 0.3s ease;
     /* Smooth transition for underline effect */
 }

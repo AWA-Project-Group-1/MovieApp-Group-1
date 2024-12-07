@@ -9,8 +9,7 @@ import Navigation from "../components/Navigation";
 import poster from "../assets/images/poster.png";
 import poster2 from "../assets/images/poster2.jpg";
 import poster3 from "../assets/images/poster3 (2).jpg";
-import Footer from "../components/Footer"
-
+import Footer from "../components/Footer";
 
 import { MoiveTVSerialContext } from "../context/MoiveTVSerialProvider";
 
@@ -46,8 +45,7 @@ const HomePage = () => {
         'release_date.gte': new Date().toISOString().split('T')[0],  
     });
    
-    
-    
+     
     
 
 

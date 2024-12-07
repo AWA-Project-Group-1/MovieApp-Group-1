@@ -1,0 +1,142 @@
+.show-time-container {
+    width: 100px; 
+    height: auto;            /* Đặt chiều rộng của mỗi item */
+    flex-shrink: 0;           /* Đảm bảo các item không bị thu nhỏ khi không gian hạn chế */
+    display: flex;
+    flex-direction: column;   /* Đặt nội dung từng phim theo chiều dọc */
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.show-time-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.show-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.show-image {
+    width: 100%; /* Hình ảnh có chiều rộng bằng container */
+    max-height: 150px; /* Giới hạn chiều cao */
+    object-fit: cover; /* Giữ tỷ lệ hình ảnh */
+    border-radius: 4px;
+}
+
+.show-right {
+    text-align: center;
+    font-size: 0.6em;
+    color: #333;
+}
+
+.show-right h2 {
+    font-size: 0.6em;
+    margin: 5px 0;
+}
+
+
+.show-time {
+    font-size: 10px;
+    color: #333;
+    white-space: normal; /* Cho phép xuống dòng */
+    margin-bottom: 10px;
+}
+
+
+.buy-ticket-button {
+    font-size: 0.6em;
+    padding: 5px 10px;
+    background-color: #0073e6;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.buy-ticket-button:hover {
+    background-color: #005bb5;
+}
+
+
+ul {
+    display: flex; /* Hiển thị ngang */
+    flex-direction: row; /* Sắp xếp theo chiều ngang */
+    list-style-type: none; /* Ẩn dấu chấm */
+    padding: 0; /* Xóa khoảng cách phía trong */
+}
+
+ul li {
+    margin-right: 10px; /* Khoảng cách giữa các item */
+    text-decoration: none; /* Ẩn gạch chân */
+    color: #007bff; /* Màu chữ */
+    font-size: 12px; /* Kích thước chữ */
+}
+li.selected {
+    color: red;
+}
+
+.movie-list-container {
+    display: flex; /* Hiển thị các phần tử con theo chiều ngang */
+    gap: 16px; /* Khoảng cách giữa các phim */
+    overflow-x: auto; /* Thêm thanh cuộn ngang nếu không gian thiếu */
+    padding: 16px; /* Khoảng cách bên trong container */
+    scrollbar-width: thin; /* Tùy chỉnh thanh cuộn (Firefox) */
+}
+
+.movie-list-container::-webkit-scrollbar {
+    height: 8px; /* Chiều cao thanh cuộn ngang (Webkit-based browsers) */
+}
+
+.movie-list-container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Màu thanh cuộn */
+    border-radius: 4px; /* Làm tròn góc thanh cuộn */
+}
+
+.movie-list-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Màu thanh cuộn khi hover */
+}
+
+.movie-item {
+    flex: 0 0 auto; /* Đảm bảo mỗi mục không co giãn */
+    width: 100px; /* Chiều rộng cố định của mỗi phim */
+    text-align: center; /* Căn giữa nội dung */
+    border: 1px solid #ccc; /* Viền nhẹ cho từng mục */
+    border-radius: 8px; /* Làm tròn góc cho mục */
+    padding: 10px; /* Khoảng cách bên trong */
+    background-color: #f9f9f9; /* Màu nền nhẹ */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+.movie-poster {
+    width: 100%; /* Đảm bảo poster lấp đầy chiều rộng mục */
+    height: auto; /* Tự động chỉnh chiều cao theo tỉ lệ */
+    border-radius: 8px; /* Làm tròn góc poster */
+    margin-bottom: 10px; /* Khoảng cách giữa poster và text */
+}
+
+.movie-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    white-space: normal; /* Cho phép xuống dòng */
+    overflow: hidden; /* Ẩn nội dung vượt quá */
+    text-overflow: ellipsis; /* Thêm dấu "..." nếu cần */
+    display: -webkit-box; /* Kết hợp với -webkit-line-clamp để giới hạn dòng */
+    -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+    -webkit-box-orient: vertical; /* Cần thiết để -webkit-line-clamp hoạt động */
+}
+
+.movie-checkbox {
+    margin-top: 10px; /* Khoảng cách giữa checkbox và nội dung khác */
+}
