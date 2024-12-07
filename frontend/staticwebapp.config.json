@@ -3,7 +3,8 @@
         "rewrite": "index.html",
         "exclude": [
             "/static/images/*.{png,jpg,gif}",
-            "/static/css/*"
+            "/static/css/*",
+            "/favicon.ico"
         ]
     },
     "mimeTypes": {
