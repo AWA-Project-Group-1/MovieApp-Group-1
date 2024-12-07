@@ -111,6 +111,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
+ 
 }
 
 .show-image {
@@ -211,35 +212,59 @@ color:  #f23030;
   }
 
 
-@media (max-width: 1024px) {
-  .movie-card {
-      flex: 1 1 100%; 
-  }
-  .searched-movie-card{
-    flex: 1 1 100%; 
-  }
-}
 
 
 /* Searched Results */
 .searched-container {
   width: 100%;
-  margin-top: 20px;
-}
+  margin: 20px;
+  margin: 0px;
+  /* border: solid; */
+ 
+} 
 
 
 .searched-show-container {
   display: flex;
-
-  flex-wrap: wrap;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
   gap: 20px;
-  width: 100%;
+  width: 50%;
   margin: 0;
   padding: 10px;
+
+
 }
-@media (min-width: 820x) {
-  .searched-show-container {width: 50%;}
+
+@media (max-width: 820px) {
+  .movie-card {
+      flex: 1 1 100%; 
+   
+  }
+  .searched-movie-card{
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 100%; 
+   
+    
+  }
+  .searched-show-container {  
+    width: 100%;
   
+  }
+}
+
+@media (max-width: 820x) {
+  .searched-show-container {
+    flex-direction: column; /* Stacks items vertically */
+  }
+
+  .searched-movie-card {
+    flex: 1 1 100%; /* Each card takes full width */
+    max-width: 100%; /* Ensures the card spans the entire row */
+    box-sizing: border-box;
+  }
+ 
 }
 .searched-movie-card {
   display: flex;
@@ -249,9 +274,10 @@ color:  #f23030;
   background-color: #f9f9f9;
   padding: 15px;
   gap: 15px;
-  flex: 1 1 calc(50% - 20px); /* 2 cards per row on large screens */
-  min-height: 150px;
+  flex: 1 1 calc(50% - 20px); 
+  min-height: 350px;
   background-color: #95d2d8;
+  box-sizing: border-box;
 }
 
 .show-image1 {
