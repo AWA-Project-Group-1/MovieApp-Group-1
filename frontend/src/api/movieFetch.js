@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
-const API_KEY = '41205468cfe66c1ee444309ef7868efe';
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
 // Fetch genres
 export const fetchGenres = async () => {
