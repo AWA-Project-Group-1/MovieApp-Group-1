@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const serverUrl = 'http://localhost:3001/api/favorites';
 const tmdbBaseUrl = 'https://api.themoviedb.org/3';
-const tmdbApiKey = '8e00f8de49614d9ebf140af3901aa5b5'; 
+const tmdbApiKey = process.env.REACT_APP_TMDB_API_KEY;
 
 // Fetch title from TMDB API
 async function fetchTitle(movieId, type) {

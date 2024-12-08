@@ -5,9 +5,9 @@ export const TVGenreContext = createContext();
 
 export function TVGenreProvider({ children }) {
     const [genreForTV, setGenreForTV] = useState("")
- 
 
-    const apiKey = '814d8d230ad1294ccbdbb69cccb0bc29'; 
+
+    const apiKey = process.env.REACT_APP_TMDB_API_KEY;
     // const url = `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}`;
     // const url1 = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&language=en-US&page=1&sort_by=popularity.desc`
     const authorization = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MTRkOGQyMzBhZDEyOTRjY2JkYmI2OWNjY2IwYmMyOSIsIm5iZiI6MTczMTQwMTUxNC4zNzIzMjk1LCJzdWIiOiI2NzMzMTViNjI5YWE4ZmYyNDRjMGUzODEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.0qof6UxtmX1ZydXb7hPBwnROQT3zdyKAbEXhXQ0OO4A';
@@ -35,7 +35,7 @@ export function TVGenreProvider({ children }) {
 
     return (
         <TVGenreContext.Provider value={genreForTV}>
-          {children}
+            {children}
         </TVGenreContext.Provider>
-      );
-    }
+    );
+}
