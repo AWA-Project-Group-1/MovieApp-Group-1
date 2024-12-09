@@ -179,7 +179,7 @@ const TVDetail = () => {
     const token = localStorage.getItem('token');
 
     return (
-        <div>
+        <div className={sytles["overall-container"]} >
             <div className={sytles['nav-herosection']} >
 
                 <Navigation />
@@ -350,8 +350,12 @@ const TVDetail = () => {
             </div>
 
 
+            <div className={sytles["footer-container"]}>
 
-            <Footer />
+                <Footer />
+
+            </div>
+            
         </div>
     )
 

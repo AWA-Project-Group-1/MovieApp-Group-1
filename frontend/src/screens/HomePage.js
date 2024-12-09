@@ -86,7 +86,7 @@ const HomePage = () => {
                 <div className={styles.gradientOverlay}></div>
 
                 <div className={styles.searchOverlay}>
-                    <h1>Welcome to NordFlix!</h1>
+                    <h1 style={{ color: 'white' }}>Welcome to NordFlix!</h1>
                     <p>Discover Movies and TV Shows. Your Next Favorite is Just a Click Away!</p>
                     <input
                         type="text"

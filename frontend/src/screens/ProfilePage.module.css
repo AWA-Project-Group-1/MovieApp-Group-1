@@ -61,18 +61,17 @@
 
 .moviesContainer {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 200px); 
   gap: 20px;
   padding: 20px;
-  justify-content: center;
-  margin: 0 auto;
-  max-width: calc(5 * 220px + 4 * 20px);
+  justify-content: center; 
+  align-items: center; 
+  margin: 0 auto; 
 }
 
 .movieCard {
   background-color: white;
-  width: 100%;
-  max-width: 200px; 
+  width: 200px; 
   border: 2px solid rgb(220, 220, 230);
   border-radius: 5px;
   padding: 10px;
@@ -83,6 +82,7 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 
 .movieCard:hover {
   transform: translateY(-2px);
@@ -123,12 +123,16 @@ h5 {
 
 @media (max-width: 455px) {
   .movieCard {
-    margin-top: 20px;
-    width: auto;
-    height: auto; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    max-width: 90%; 
+    margin: 0 auto;
+  }
+
+  .movieImage {
+    aspect-ratio: 2 / 3;
+  }
+
+  h5 {
+    font-size: 0.9rem;
   }
 
   .removeButton {
@@ -140,49 +144,31 @@ h5 {
 
 @media (min-width: 456px) and (max-width: 767px) {
   .movieCard {
-    width: auto;
-    height: auto; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    max-width: 200px; 
   }
 
-  .removeButton {
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-size: 1rem;
+  .movieImage {
+    aspect-ratio: 2 / 3;
   }
 }
 
-@media (min-width: 768px) and (max-width: 853px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .movieCard {
-    height: auto;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    max-width: 240px;
   }
 
-  .removeButton {
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-size: 1rem;
+  .movieImage {
+    aspect-ratio: 2 / 3;
   }
 }
 
-@media (min-width: 854px) and (max-width: 1024px) {
+@media (min-width: 1025px) {
   .movieCard {
-    height: auto;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    max-width: 300px; 
   }
 
-  .removeButton {
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-size: 1.1rem;
+  .movieImage {
+    aspect-ratio: 2 / 3;
   }
 }
 

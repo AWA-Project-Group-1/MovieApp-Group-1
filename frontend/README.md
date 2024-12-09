@@ -23,7 +23,7 @@ This project is designed for movie enthusiasts, providing features to search for
 
 ## Project Team Roles and Responsibilities
 
-- Yanwen He: Movies- and TVSeries Page, Showtimes
+- Yanwen He: Movies- and TVSeries Page, Showtimes,DetailPage, search/filter functionality
 - Ke Zhang: SignUp, SignIn, DeleteAccount
 - Suheda Sener: Reviews and Homepage
 - Shromona Hossain: Homepage

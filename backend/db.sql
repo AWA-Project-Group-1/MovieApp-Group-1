@@ -78,7 +78,7 @@ CREATE TABLE groupMembers (
   users_id INT,
   role VARCHAR(45),
   group_id INT,
-  status SMALLINT,
+  status varchar(255),
   CONSTRAINT fk_groupMembers_groups FOREIGN KEY (group_id)
     REFERENCES groups (id)
 );

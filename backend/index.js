@@ -6,6 +6,7 @@ import favoriteRouter from './routers/favoriteRouter.js';
 import reviewsRouter from './routers/reviewRouter.js'
 import authRouter from './routers/authRouter.js';
 import { pool } from './helpers/db.js'; // Optional: test database connection on startup
+import groupRoutes from './routers/groupRouter.js';
 
 dotenv.config();
 console.log('DB_USER:', process.env.DB_USER);
@@ -36,7 +37,7 @@ app.use('/api/favorites', favoriteRouter);
 // Use the reviews router for /reviews endpoint
 app.use('/api/reviews', reviewsRouter);
 
-
+app.use('/api/groups', groupRoutes);
 // Fallback route for 404 errors
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });

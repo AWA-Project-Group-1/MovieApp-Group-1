@@ -5,7 +5,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import AllMovies from './screens/AllMovies';
 import HomePage from './screens/HomePage';
 import './App.css';
-
+import { GroupProvider } from "./context/GroupProvider";
+import GroupPage from "./screens/GroupPage";
+import GroupDetailsPage from "./components/GroupDetailsPage.js"; // Import new page
 
 // heyanwen
 import TVSerial from "./screens/TVSerial.js"
@@ -38,31 +40,34 @@ const App = () => (
     <MoiveTVSerialProvider>
       <TVGenreProvider>
         <MovieGenreProvider>
-
-          <Router>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              {/* <Route path="/movie/:id" element={MovieDetails} /> */}
-              {/* <Route path="/movies/top-rated" element={<AllMovies type="top-rated" />} />
+          <GroupProvider>
+            <Router>
+              <Routes>
+                {/* Add a new route for group functionality */}
+                <Route path="/group" element={<GroupPage />} />
+                <Route path="/group/:id" element={<GroupDetailsPage />} />
+                <Route path="/" element={<HomePage />} />
+                {/* <Route path="/movie/:id" Component={MovieDetails} /> */}
+                {/* <Route path="/movies/top-rated" element={<AllMovies type="top-rated" />} />
                 <Route path="/movies/upcoming" element={<AllMovies type="upcoming" />} /> */}
-              <Route path='/tvserial' element={<TVSerial />} />
-              <Route path='/movies' element={<MoviePage />} />
-              {/* <Route path="/detail/:movieId" element={<TVDetail />} />  */}
-              {/* <Route path="/showtime" element={<MovieShowtimes />} /> */}
-              <Route path="/showtime" element={<ShowTime />} />
-              <Route path="/detail/movie/:id" element={<MovieDetail />} />
-              <Route path="/detail/tv/:id" element={<TVDetail />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/shared-favorites/:userId" element={<SharedFavoritesPage />} />
-              <Route path="/user-list" element={<UserListPage />} />
-              <Route path="/:tvormovie" element={<HeroSection />} />
-              <Route path="/sign-in" element={<SignIn />} />
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/about" element={<About />} />
+                <Route path='/tvserial' element={<TVSerial />} />
+                <Route path='/movies' element={<MoviePage />} />
+                {/* <Route path="/detail/:movieId" element={<TVDetail />} />  */}
+                {/* <Route path="/showtime" element={<MovieShowtimes />} /> */}
+                <Route path="/showtime" element={<ShowTime />} />
+                <Route path="/detail/movie/:id" element={<MovieDetail />} />
+                <Route path="/detail/tv/:id" element={<TVDetail />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/shared-favorites/:userId" element={<SharedFavoritesPage />} />
+                <Route path="/user-list" element={<UserListPage />} />
+                <Route path="/:tvormovie" element={<HeroSection />} />
+                <Route path="/sign-in" element={<SignIn />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="/about" element={<About />} />
 
-            </Routes>
-          </Router>
-
+              </Routes>
+            </Router>
+          </GroupProvider>
         </MovieGenreProvider>
       </TVGenreProvider>
 
