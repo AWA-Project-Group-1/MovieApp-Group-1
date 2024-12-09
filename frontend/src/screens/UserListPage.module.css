@@ -1,66 +1,100 @@
 .userListPage {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .userListContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
+  padding: 20px;
+  text-align: center;
+}
+
+.userListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.userCard {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+}
+
+.userIcon {
+  font-size: 2rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.userCard h3 {
+  margin-bottom: 15px;
+}
+
+.sharedLinkButton {
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sharedLinkButton:hover {
+  background-color: #d9594b;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
   .userCard {
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    width: 300px;
-    text-align: center;
+    width: 250px;
+    padding: 15px;
   }
 
   .userIcon {
-    font-size: 2rem; 
-    color: #555; 
-    margin-bottom: 0.5rem; 
+    font-size: 1.8rem;
   }
-  
-  .userCard h3 {
-    margin-bottom: 15px;
-  }
-  
+
   .sharedLinkButton {
-    padding: 10px 20px;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 8px 15px;
+    font-size: 14px;
   }
-  
-  .sharedLinkButton:hover {
-    background-color: #d9594b;
+}
+
+@media (max-width: 768px) {
+  .userCard {
+    width: 200px;
+    padding: 10px;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .userCard {
-      width: 100%; /* Make user cards take full width on smaller screens */
-    }
+
+  .userIcon {
+    font-size: 1.5rem;
   }
-  
-  @media (max-width: 576px) {
-    .userListContainer {
-      gap: 10px; /* Reduce the gap between user cards for small screens */
-    }
-  
-    .userCard {
-      padding: 15px; /* Adjust padding for smaller screens */
-      font-size: 14px; /* Slightly reduce font size */
-    }
-  
-    .sharedLinkButton {
-      padding: 8px 16px; /* Adjust button size for smaller screens */
-    }
+
+  .sharedLinkButton {
+    padding: 8px 12px;
+    font-size: 12px;
   }
+}
+
+@media (max-width: 480px) {
+  .userListContainer {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .userCard {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .userIcon {
+    font-size: 1.2rem;
+  }
+
+  .sharedLinkButton {
+    padding: 6px 10px;
+    font-size: 12px;
+    width: 100%;
+  }
+}

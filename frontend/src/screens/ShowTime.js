@@ -438,7 +438,7 @@ const ShowTime = () => {
 
             </div>
             
-        {/* <Footer /> */}
+        <Footer />
         </div>
     )
 }

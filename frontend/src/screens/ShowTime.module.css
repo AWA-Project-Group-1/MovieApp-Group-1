@@ -42,11 +42,15 @@
 }
 
 .fetch-showtime-container button{ 
-  background-color: #a0183c;
+  background-color:  #f23030;
   
 
 }
+.fetch-showtime-container button:hover{ 
+  background-color:  #a0183c;
+  
 
+}
 
 .theater-container, .movie-container, .date-container, .fetch-showtime-container label{
    /* margin-bottom: 30px; */
@@ -318,4 +322,7 @@ color:  #f23030;
   margin: 0 10px;
   font-weight: bold;
 }
-
+/* .footer-container {
+  margin: 0;
+  padding: 0;
+} */

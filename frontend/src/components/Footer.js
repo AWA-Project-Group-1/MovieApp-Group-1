@@ -12,7 +12,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="text-center text-lg-start text-muted" style={{ backgroundColor: '#f4f4f9', marginTop: '100px', width: '100%', transition: 'background-color 0.2s ease, margin-top 0.2s ease' }}>
+    <footer className="text-center text-lg-start text-muted" style={{ backgroundColor: '#f4f4f9', marginTop: '50px', width: '100%', transition: 'background-color 0.2s ease, margin-top 0.2s ease' }}>
 
       {/* Content Section */}
       <section className="">

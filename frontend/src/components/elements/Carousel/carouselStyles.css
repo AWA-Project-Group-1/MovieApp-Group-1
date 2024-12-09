@@ -70,7 +70,7 @@
     /* Add spacing between letters */
     transition: color 0.3s ease;
     /* Smooth color transition for hover */
-    margin-top: 15px;
+    margin-top: 35px;
 }
 
 .carousel-release-date {
