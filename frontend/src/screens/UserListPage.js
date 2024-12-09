@@ -9,6 +9,8 @@ const UserListPage = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
+  const baseUrl = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     async function fetchUsers() {
       try {
