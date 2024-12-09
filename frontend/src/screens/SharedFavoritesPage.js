@@ -12,10 +12,12 @@ const SharedFavoritesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
+  const baseUrl = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch(`http://localhost:3001/api/favorites/user-email/${userId}`);
+        const response = await fetch(`${baseUrl}/api/favorites/user-email/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch user email');
         }
@@ -29,7 +31,7 @@ const SharedFavoritesPage = () => {
     async function fetchSharedFavorites() {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/favorites/shared-favorites/${userId}`
+          `${baseUrl}/api/favorites/shared-favorites/${userId}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch shared favorites from server');
@@ -79,16 +81,16 @@ const SharedFavoritesPage = () => {
     if (i < tvSeries.length) mixedItems.push(tvSeries[i]);
   }
 
-  
- // Pagination logic
-const startIndexMovies = (currentPage - 1) * 5; 
-const startIndexSeries = (currentPage - 1) * 5; 
-const visibleMovies = movies.slice(startIndexMovies, startIndexMovies + 5);
-const visibleSeries = tvSeries.slice(startIndexSeries, startIndexSeries + 5);
 
-// Combine movies and series for the current page
-const visibleItems = [...visibleMovies, ...visibleSeries];
-const totalPages = Math.ceil(Math.max(movies.length, tvSeries.length) / 5);
+  // Pagination logic
+  const startIndexMovies = (currentPage - 1) * 5;
+  const startIndexSeries = (currentPage - 1) * 5;
+  const visibleMovies = movies.slice(startIndexMovies, startIndexMovies + 5);
+  const visibleSeries = tvSeries.slice(startIndexSeries, startIndexSeries + 5);
+
+  // Combine movies and series for the current page
+  const visibleItems = [...visibleMovies, ...visibleSeries];
+  const totalPages = Math.ceil(Math.max(movies.length, tvSeries.length) / 5);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -108,7 +110,7 @@ const totalPages = Math.ceil(Math.max(movies.length, tvSeries.length) / 5);
       <button
         className={styles.homeButton}
         onClick={() => navigate('/')}>
-          Go back to Homepage
+        Go back to Homepage
       </button>
       <h1 className={styles.title}>Shared Favorites of {email}</h1>
       {visibleItems.length > 0 ? (
@@ -171,9 +173,8 @@ const totalPages = Math.ceil(Math.max(movies.length, tvSeries.length) / 5);
             <button
               key={i + 1}
               onClick={() => handlePageChange(i + 1)}
-              className={`${styles.pageButton} ${
-                currentPage === i + 1 ? styles.activePage : ''
-              }`}
+              className={`${styles.pageButton} ${currentPage === i + 1 ? styles.activePage : ''
+                }`}
             >
               {i + 1}
             </button>

@@ -12,10 +12,12 @@ function SignIn() {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
 
+  const baseUrl = process.env.REACT_APP_BACKEND_URL;
+
   const handleSignIn = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/auth/signin",
+        `${baseUrl}/api/auth/signin`,
         { email, password },
         {
           headers: {

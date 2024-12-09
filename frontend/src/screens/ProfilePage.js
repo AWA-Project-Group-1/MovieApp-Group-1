@@ -15,6 +15,8 @@ const Profile = () => {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  const baseUrl = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     async function getFavorites() {
       try {
@@ -53,7 +55,7 @@ const Profile = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete('http://localhost:3001/api/auth/delete-account', {
+      await axios.delete(`${baseUrl}/api/auth/delete-account`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
 
@@ -139,10 +141,10 @@ const Profile = () => {
           </button>
         </div>
         <div className={styles.userListButtonContainer}>
-            <button onClick={() => navigate('/user-list')} className={styles.userListButton}>
+          <button onClick={() => navigate('/user-list')} className={styles.userListButton}>
             View All Users
           </button>
-</div>
+        </div>
       </div>
       <div className={styles.favoritesContainer}>
         <h2 className={styles.favoritesHeading}>Your Favorites</h2>
@@ -217,9 +219,8 @@ const Profile = () => {
               <button
                 key={i + 1}
                 onClick={() => handlePageChange(i + 1)}
-                className={`${styles.pageButton} ${
-                  currentPage === i + 1 ? styles.activePage : ''
-                }`}
+                className={`${styles.pageButton} ${currentPage === i + 1 ? styles.activePage : ''
+                  }`}
               >
                 {i + 1}
               </button>

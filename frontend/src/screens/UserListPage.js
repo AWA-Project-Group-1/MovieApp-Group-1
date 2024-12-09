@@ -12,7 +12,7 @@ const UserListPage = () => {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await axios.get('http://localhost:3001/api/auth/users');
+        const response = await axios.get(`${baseUrl}/api/auth/users`);
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);

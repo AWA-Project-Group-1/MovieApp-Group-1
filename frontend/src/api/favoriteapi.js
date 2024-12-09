@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const serverUrl = 'http://localhost:3001/api/favorites';
+const baseUrl = process.env.REACT_APP_BACKEND_URL;
+const serverUrl = `${baseUrl}/api/favorites`;
 const tmdbBaseUrl = 'https://api.themoviedb.org/3';
 const tmdbApiKey = process.env.REACT_APP_TMDB_API_KEY;
 

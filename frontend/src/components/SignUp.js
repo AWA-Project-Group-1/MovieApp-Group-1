@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/movieapplogo.jpg";
 import "./SignUp.css";
 
+const baseUrl = process.env.REACT_APP_BACKEND_URL;
+
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +15,7 @@ function SignUp() {
   const handleSignUp = async () => {
     try {
       await axios.post(
-        "http://localhost:3001/api/auth/signup",
+        `${baseUrl}/api/auth/signup`,
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
