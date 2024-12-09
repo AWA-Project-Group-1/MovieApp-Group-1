@@ -32,7 +32,7 @@
 
 .sharedLinkButton {
   padding: 10px 20px;
-  background-color: #e74c3c;
+  background-color: #f23030;
   color: white;
   border: none;
   border-radius: 5px;
@@ -41,7 +41,7 @@
 }
 
 .sharedLinkButton:hover {
-  background-color: #d9594b;
+  background-color: #a0183c;
   transform: translateY(-2px);
 }
 

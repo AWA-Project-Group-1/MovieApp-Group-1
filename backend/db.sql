@@ -66,8 +66,9 @@ CREATE TABLE groupContent (
   show_time_start TIMESTAMP,
   show_time_end TIMESTAMP,
   show_time_image VARCHAR(255),
-  CONSTRAINT fk_groupContent_groups FOREIGN KEY (group_id)
-    REFERENCES groups (id)
+  CONSTRAINT fk_groupContent_groups FOREIGN KEY (group_id) REFERENCES groups (id),
+  CONSTRAINT fk_groupContent_users FOREIGN KEY (users_id) REFERENCES users(id)
+
 );
 
 -- Table: groupMembers

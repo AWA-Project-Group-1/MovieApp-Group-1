@@ -1,29 +1,21 @@
 import express from 'express';
 import { pool } from '../helpers/db.js';
-// authMiddleware.js
-import jwt from 'jsonwebtoken';
+import authenticate from '../helpers/auth.js';
 
 const router = express.Router();
-
-export const authenticate = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ error: 'No token provided' });
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify JWT and decode it
-        req.userId = decoded.userId; // Attach the user ID from the token to the request
-        next(); // Proceed to the next middleware or route handler
-    } catch (error) {
-        return res.status(401).json({ error: 'Invalid or expired token' });
-    }
-};
 
 // GET request for fetching reviews for a specific movie or TV show (no authentication needed)
 router.get('/:contentType/:movieId', (req, res) => {
     const { contentType, movieId } = req.params;
+
+    if (!contentType || (contentType !== 'movie' && contentType !== 'tv')) {
+        return res.status(400).json({ error: 'Missing or invalid contentType. Expected "movie" or "tv".' });
+    }
+
+    // Validate movieId (ensure it's a valid number or ID format, if applicable)
+    if (!movieId || isNaN(movieId)) {
+        return res.status(400).json({ error: 'Missing or invalid movieId.' });
+    }
 
     const query = `
         SELECT reviews.id, reviews.movies_id, reviews.rating, reviews.comment, reviews.type, reviews.created_at, users.email
@@ -41,7 +33,7 @@ router.get('/:contentType/:movieId', (req, res) => {
     });
 });
 
-// GET request for fetching reviews for a specific movie or TV show of the logged-in user
+// GET request for fetching reviews for a specific movie or TV show of the logged-in user (for the card give review/ already reviwewd toggle functionality)
 router.get('/user/:contentType/:movieId', authenticate, (req, res) => {
     const { contentType, movieId } = req.params;
     const userId = req.userId; // Use the user ID from the token
@@ -69,7 +61,7 @@ router.get('/user/:contentType/:movieId', authenticate, (req, res) => {
 
 router.get('/user', authenticate, (req, res) => {
     const { contentType } = req.query; // Extract 'movie' or 'tv' from query params
-    const userId = req.userId;  // Assuming you have userId from authentication
+    const userId = req.userId;
 
     // Validate the contentType
     if (contentType !== 'movie' && contentType !== 'tv') {
