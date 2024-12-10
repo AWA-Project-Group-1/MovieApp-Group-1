@@ -24,21 +24,11 @@ app.use(cors());
 app.use(express.json());
 
 // Test database connection
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Test database connection
-console.log('Attempting to connect to the database...');
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
-    console.error('Error connecting to the database:');
-    console.error('Error message:', err.message);
-    console.error('Error stack:', err.stack);
-    console.log('Check your database credentials and configuration.');
+    console.error('Error connecting to the database:', err);
   } else {
-    console.log('Database connected successfully:');
-    console.log('Current time from the database:', res.rows[0]);
+    console.log('Database connected:', res.rows[0]);
   }
 });
 
