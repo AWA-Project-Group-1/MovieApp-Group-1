@@ -9,18 +9,34 @@ import { pool } from './helpers/db.js'; // Optional: test database connection on
 import groupRoutes from './routers/groupRouter.js';
 
 dotenv.config();
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_NAME:', process.env.DB_NAME);
-console.log('TEST_DB_NAME:', process.env.TEST_DB_NAME);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-console.log('DB_PORT:', process.env.DB_PORT);
+console.log(process.env.DATABASE_URL);
+
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+
+const allowedOrigins = [
+  'http://localhost:3000', // Local development
+  'https://your-frontend.onrender.com', // Production frontend
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Authorization', 'Content-Type'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // Test database connection
@@ -46,5 +62,5 @@ app.use((req, res) => {
 
 // Start server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on Port: ${port}`);
 });

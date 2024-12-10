@@ -7,12 +7,12 @@ const { Pool } = pkg;
 
 // Create a pool to manage PostgreSQL connections
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.NODE_ENV === 'development' ? process.env.DB_NAME : process.env.TEST_DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
+
 
 pool.on('connect', () => {
   console.log('Connected to the PostgreSQL database');
