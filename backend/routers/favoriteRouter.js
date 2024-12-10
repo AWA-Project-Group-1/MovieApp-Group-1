@@ -47,3 +47,5 @@ router.get('/user', authenticate, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch favorites" });
   }
 });
+
+export default router;

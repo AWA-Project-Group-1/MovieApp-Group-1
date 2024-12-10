@@ -1,6 +1,7 @@
 import express from 'express';
 import { supabase } from '../helpers/db.js';
 import authenticate from '../helpers/auth.js';
+import e from 'express';
 
 const router = express.Router();
 
@@ -41,3 +42,5 @@ router.post('/', authenticate, async (req, res) => {
     res.status(500).json({ error: "Failed to add review" });
   }
 });
+
+export default router;

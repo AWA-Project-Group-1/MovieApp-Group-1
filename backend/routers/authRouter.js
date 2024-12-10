@@ -91,3 +91,5 @@ router.delete("/delete-account", async (req, res) => {
     res.status(500).json({ error: "Failed to delete account" });
   }
 });
+
+export default router;
