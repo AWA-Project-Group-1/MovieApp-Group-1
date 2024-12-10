@@ -369,7 +369,7 @@ padding-left:0px;
 
   .show-menu li {
     color: white;
-    margin: 10px 0;
+    margin: 5px 0;
   }
 
   .show-menu a {
@@ -379,5 +379,6 @@ padding-left:0px;
 
   .show-menu li:hover {
     background-color: #a0183c;
+    width: 120px;
   }
 }

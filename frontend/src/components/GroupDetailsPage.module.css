@@ -86,4 +86,25 @@
   ul li button:hover {
     background-color: #a0183c;
   }
+
+  .delete-leave-back-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .delete-leave-back-button-container button{
+    background-color: #f23030!important;
+    width: 80%;
+    margin-bottom: 20px!important;
+
+  }
+
+  .delete-leave-back-button-container button:hover{
+    background-color: #a0183c!important;
+    transform: scale(1.01); 
+
+  }
   

@@ -5,6 +5,7 @@ import Navigation from '../components/Navigation';
 import axios from 'axios';
 import styles from './ProfilePage.module.css';
 import UserContext from '../context/UserContext';
+import Footer from "../components/Footer"
 
 const ITEMS_PER_GROUP = 5; // 5 movies + 5 TV series per page
 
@@ -228,6 +229,7 @@ const Profile = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

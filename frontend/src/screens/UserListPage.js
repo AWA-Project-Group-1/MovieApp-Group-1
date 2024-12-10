@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FaUser } from 'react-icons/fa'; // Import user icon
 import styles from './UserListPage.module.css';
 import Navigation from '../components/Navigation';
-
+import Footer from "../components/Footer"
 const UserListPage = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
@@ -41,6 +41,7 @@ const UserListPage = () => {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 };

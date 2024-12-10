@@ -33,7 +33,9 @@ const Navitation = () => {
     navigate ("/showtime")
   }
 
-
+ function  signinclickedHandler(){
+  navigate ("/showtime")
+ }
   function tvserialClickHandler(){
     navigate ('/tvserial')
 
@@ -97,23 +99,26 @@ const Navitation = () => {
   
         { user ? (
         <ul className={`${hamburgerMenu ? styles["show-menu"] : styles["hide-menu"]}`}>
-            <li><Link onClick={homeclickedHandler} to="/">Home</Link></li>
-            <li><Link onClick={movieclickHandler} to="/movies">Movies</Link></li>
-            <li><Link onClick={tvserialClickHandler} to="/tvserial">TV Serial</Link></li>
-            <li><Link onClick={showtimeClickHandler} to="/showtime">Show Time</Link></li>
-            <li><Link onClick={homeclickedHandler} to="/group">Profile Page</Link></li>
-            <li><Link onClick={homeclickedHandler} to="/group">Group Page</Link></li>
+            <li className={styles["nav-link" ]}><Link onClick={homeclickedHandler} to="/">Home</Link></li>
+            <li className={styles["nav-link" ]}><Link onClick={movieclickHandler} to="/movies">Movies</Link></li>
+            <li className={styles["nav-link" ]}><Link onClick={tvserialClickHandler} to="/tvserial">TV Serial</Link></li>
+            <li className={styles["nav-link" ]}><Link onClick={showtimeClickHandler} to="/showtime">Show Time</Link></li>
+            <li className={styles["nav-link" ]}><Link onClick={profileclickHandler} to="/profile">Profile Page</Link></li>
+            <li className={styles["nav-link" ]}><Link onClick={homeclickedHandler} to="/group">Group Page</Link></li>
             {/* <li className={styles["logout-button-hamburgerbar-container"]}> */}
               <button onClick={logoutHandler} className={styles["logout-button-hamburgerbar"]}>Logout</button>
             {/* </li> */}
           </ul>):(
             <ul className={`${hamburgerMenu ? styles["show-menu"] : styles["hide-menu"]}`}>
-              <li><Link onClick={homeclickedHandler} to="/">Home</Link></li>
-              <li><Link onClick={movieclickHandler} to="/movies">Movies</Link></li>
-              <li><Link onClick={tvserialClickHandler} to="/tvserial">TV Serial</Link></li>
-              <li><Link onClick={showtimeClickHandler} to="/showtime">Show Time</Link></li>
-              <li><Link onClick={homeclickedHandler} to="/profile">Profile</Link></li>
-              <li><Link onClick={homeclickedHandler} to="/sign-in">SignIn/SignUp</Link></li>
+              <li className={styles["nav-link" ]}><Link onClick={homeclickedHandler} to="/">Home</Link></li>
+              <li className={styles["nav-link" ]}><Link onClick={movieclickHandler} to="/movies">Movies</Link></li>
+              <li className={styles["nav-link" ]}><Link onClick={tvserialClickHandler} to="/tvserial">TV Serial</Link></li>
+              <li className={styles["nav-link" ]}> <Link onClick={showtimeClickHandler} to="/showtime">Show Time</Link></li>
+              <li className={styles["nav-link" ]}><Link onClick={profileclickHandler} to="/profile">Profile</Link></li>
+              <li className={styles["nav-link"]}>
+                <Link to="/sign-in">Sign In</Link> | <Link to="/sign-up">Sign Up</Link>
+              </li>
+              {/* <li><Link onClick={signinclickedHandler} to="/sign-in">SignIn/SignUp</Link></li> */}
           </ul>
           )
           }
