@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import favoriteRouter from './routers/favoriteRouter.js';
 import reviewsRouter from './routers/reviewRouter.js'
 import authRouter from './routers/authRouter.js';
-import { pool } from './helpers/db.js'; // Optional: test database connection on startup
 import groupRoutes from './routers/groupRouter.js';
 
 dotenv.config();
