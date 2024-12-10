@@ -119,7 +119,7 @@ router.post('/:groupId/content', async (req, res) => {
       
           // Kiểm tra nếu người dùng là member
           const memberResult = await pool.query(
-            "SELECT id FROM groupMembers WHERE status = 1 AND group_id = $1 AND users_id = $2",
+            "SELECT id FROM groupMembers WHERE status == 1 AND group_id = $1 AND users_id = $2",
             [groupId, userId]
           );
           
