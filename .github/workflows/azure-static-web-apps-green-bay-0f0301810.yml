@@ -33,6 +33,7 @@ jobs:
           output_location: "build" # Built app content directory - optional
         env:
           REACT_APP_TMDB_API_KEY: 41205468cfe66c1ee444309ef7868efe
+          REACT_APP_BACKEND_URL: https://movieapp-group-1.onrender.com
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
