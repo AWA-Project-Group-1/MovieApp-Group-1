@@ -1,6 +1,7 @@
 //this is backend/routes/groupRoutes.js file
 import express from 'express';
-import { createGroup, getGroups, deleteGroup, getGroupById, sendJoinRequest, acceptJoinRequest, rejectJoinRequest, removeMember, leaveGroup, getUserGroups } from '../controllers/groupController.js';
+import { createGroup, getGroups, deleteGroup, getGroupById, displayMovieToGroup,sendJoinRequest,acceptJoinRequest, rejectJoinRequest, removeMember, leaveGroup, getUserGroups , addMovieToGroup} from '../controllers/groupController.js';
+
 import authenticate from '../helpers/auth.js';
 const router = express.Router();
 
@@ -36,6 +37,10 @@ router.post('/remove-member', authenticate, removeMember);
 // Route to leave the group (only for members)
 router.post('/:groupId/leave-group', authenticate, leaveGroup);
 
+// Route for adding a movie to a group
+router.post('/:groupId/add-movie', authenticate, addMovieToGroup);
 
+// to display the movie fro a grou:
+router.get('/:groupId/movies', authenticate, displayMovieToGroup)
 
 export default router;

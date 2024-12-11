@@ -356,3 +356,79 @@ export const leaveGroup = async (req, res) => {
 
 
 
+export const addMovieToGroup = async (req, res) => {
+    const { groupId } = req.params; // Extract groupId from the URL params
+    const { userId, movieId, title, description, posterPath } = req.body; // Extract movie details from the request body
+
+    // Validate the required fields
+    if (!title || !userId || !posterPath ) {
+        return res.status(400).json({
+            success: false,
+            message: 'Title, userId, and posterPath are required.',
+        });
+    }
+
+    try {
+        // Check if the group exists
+        const groupResult = await pool.query('SELECT * FROM groups WHERE id = $1', [groupId]);
+        if (groupResult.rowCount === 0) {
+            return res.status(404).json({ success: false, message: 'Group not found.' });
+        }
+
+        // Insert the new movie into the groupContent table
+        // const { users_id, movie_id, movie_title, description, movie_poster_path } = req.body;
+        const insertQuery = `
+            INSERT INTO groupContent (group_id, users_id,movie_id, movie_title, movie_poster_path,post_content)
+            VALUES ($1, $2, $3, $4, $5,$6  )
+            RETURNING *;
+        `;
+        const values = [groupId, userId, movieId, title, posterPath, description];
+        const result = await pool.query(insertQuery, values);
+
+        // Return success response with the new movie details
+        res.status(201).json({
+            success: true,
+            message: 'Movie added successfully!',
+            movie: result.rows[0],
+        });
+    } catch (error) {
+        console.error('Error adding movie:', error.message);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error.',
+            error: error.message, // Log error message for debugging
+        });
+    }
+};
+
+// // for get all the data fro the group 
+export const displayMovieToGroup = async (req, res) =>  {
+    const { groupId } = req.params; // Extract groupId from the URL params
+
+    try {
+        // Query to fetch all movies in the specified group
+        const result = await pool.query('SELECT * FROM groupContent WHERE group_id = $1', [groupId]);
+
+        // Check if any movies were found
+        if (result.rowCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No movies found for this group.',
+            });
+        }
+
+        // Return the movies in the response
+        res.status(200).json({
+            success: true,
+            message: 'Movies fetched successfully!',
+            movies: result.rows, // Array of movies
+        });
+    } catch (error) {
+        console.error('Error fetching movies:', error.message);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error.',
+            error: error.message, // Log error message for debugging
+        });
+    }
+};

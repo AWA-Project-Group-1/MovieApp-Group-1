@@ -162,7 +162,29 @@ export const GroupProvider = ({ children }) => {
     }
   };
   
-  
+ //  Add a movie to a group
+ const addMovieToGroup = async (groupId, movie) => {
+  try {
+    // Send a POST request to add the movie to the group
+    const response = await api.post(`api/groups/${groupId}/add-movie`, movie);
+    console.log('Response from backend:', response.data); // Log the response to check its structure
+
+    const updatedGroup = response.data;
+
+    // Update the group details in state if it matches the current group
+    if (groupDetails?.id === groupId) {
+      setGroupDetails((prevDetails) => ({
+        ...prevDetails,
+        movies: [...prevDetails.movies, movie], // Add the new movie to the group's movie list
+      }));
+    }
+
+    return updatedGroup;
+  } catch (error) {
+    console.error("Error adding movie to group:", error);
+    throw new Error("Failed to add movie to the group");
+  }
+}; 
 
 
   // Fetch groups when the component mounts
@@ -185,6 +207,7 @@ export const GroupProvider = ({ children }) => {
         fetchUserGroups,
         fetchGroupDetails,
         deleteGroup,
+        addMovieToGroup,
 
       }}
     >
