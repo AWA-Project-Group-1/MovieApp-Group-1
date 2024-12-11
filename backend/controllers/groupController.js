@@ -127,12 +127,12 @@ export const getGroupById = async (req, res) => {
         }));
 
         // Send response with group details and members
-        res.status(200).json({ 
-            ...group,  
-            owners_id: group.owners_id,  
+        res.status(200).json({
+            ...group,
+            owners_id: group.owners_id,
             currentUserId, // Add current user's ID
             members,
-            joinRequests 
+            joinRequests
         });
     } catch (error) {
         console.error(`Error fetching group with id ${id}:`, error.message);
@@ -278,30 +278,32 @@ export const rejectJoinRequest = async (req, res) => {
 export const deleteGroup = async (req, res) => {
     const groupId = req.params.groupId;
     const userId = req.query.userId;  // Extract userId from the query parameter
-  
-    console.log('Received delete request for group:', groupId, 'by user:', userId);
-  
-    try {
-      // Check if the user is the owner of the group
-      const groupResult = await pool.query('SELECT * FROM groups WHERE id = $1 AND owners_id = $2', [groupId, userId]);
-      if (groupResult.rows.length === 0) {
-        return res.status(403).json({ message: 'Only the owner can delete the group.' });
-      }
-  
-      // Delete all members of the group
-      await pool.query('DELETE FROM groupMembers WHERE group_id = $1', [groupId]);
 
-      // Now delete the group
-      await pool.query('DELETE FROM groups WHERE id = $1', [groupId]);
-      res.status(200).json({ message: 'Group deleted .' });
+    console.log('Received delete request for group:', groupId, 'by user:', userId);
+
+    try {
+        // Check if the user is the owner of the group
+        const groupResult = await pool.query('SELECT * FROM groups WHERE id = $1 AND owners_id = $2', [groupId, userId]);
+        if (groupResult.rows.length === 0) {
+            return res.status(403).json({ message: 'Only the owner can delete the group.' });
+        }
+        // Delete any content associated with the group (messages, posts, etc.)
+        await pool.query('DELETE FROM groupContent WHERE group_id = $1', [groupId]);
+
+        // Delete all members of the group
+        await pool.query('DELETE FROM groupMembers WHERE group_id = $1', [groupId]);
+
+        // Now delete the group
+        await pool.query('DELETE FROM groups WHERE id = $1', [groupId]);
+        res.status(200).json({ message: 'Group deleted .' });
     } catch (error) {
-      console.error('Error deleting group:', error.message);
-      res.status(500).json({ message: 'Internal server error.' });
+        console.error('Error deleting group:', error.message);
+        res.status(500).json({ message: 'Internal server error.' });
     }
 };
 
-  
-  
+
+
 
 
 // Remove member from group (Only for owners)
@@ -361,7 +363,7 @@ export const addMovieToGroup = async (req, res) => {
     const { userId, movieId, title, description, posterPath } = req.body; // Extract movie details from the request body
 
     // Validate the required fields
-    if (!title || !userId || !posterPath ) {
+    if (!title || !userId || !posterPath) {
         return res.status(400).json({
             success: false,
             message: 'Title, userId, and posterPath are required.',
@@ -402,7 +404,7 @@ export const addMovieToGroup = async (req, res) => {
 };
 
 // // for get all the data fro the group 
-export const displayMovieToGroup = async (req, res) =>  {
+export const displayMovieToGroup = async (req, res) => {
     const { groupId } = req.params; // Extract groupId from the URL params
 
     try {

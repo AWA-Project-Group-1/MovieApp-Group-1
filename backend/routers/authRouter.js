@@ -75,6 +75,9 @@ router.delete("/delete-account", async (req, res) => {
 
     await pool.query("DELETE FROM favorites WHERE users_id = $1", [userId]); // delete favorites first
     await pool.query("DELETE FROM reviews WHERE users_id = $1", [userId]); // delete reviews
+    await pool.query("DELETE FROM groupContent WHERE users_id = $1", [userId]); // Delete posts by user in groups
+    await pool.query("DELETE FROM groupMembers WHERE users_id = $1", [userId]); // Remove user from groups
+    await pool.query("DELETE FROM groups WHERE owners_id = $1", [userId]); // Delete groups owned by the user
 
     await pool.query("DELETE FROM users WHERE id = $1", [userId]); // Use the extracted userId
     res.status(200).json({ message: "Account deleted successfully" });
