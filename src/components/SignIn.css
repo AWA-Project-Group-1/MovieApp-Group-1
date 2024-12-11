@@ -41,16 +41,17 @@ input {
 button {
   width: 100%;
   padding: 14px;
-  background-color: #6c63ff;
+  background-color: #f23030!important;
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
+  width: 60%;
 }
 
 button:hover {
-  background-color: #5a52e4;
+  background-color: #a0183c;
 }
 
 p {
