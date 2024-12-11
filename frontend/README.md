@@ -29,7 +29,7 @@ This project is designed for movie enthusiasts, providing features to search for
 - Shromona Hossain: Homepage
 - Thanh Nghi Vu Vo: Grouppage
 - Seraj Shekh: Grouppage
-- Robin Holzheuer: Profile-/Favoritespage, SharedFavorites-Page
+- Robin Holzheuer: Profile-/Favoritespage, SharedFavorites-Page, UserListPage
 
 ## Database Structure
 
@@ -58,7 +58,8 @@ This project is designed for movie enthusiasts, providing features to search for
 - **Favorites Page**: Access and manage favorite movies/TV shows, share links, and delete accounts.
 - **Groups Page**: Create, join, or leave groups; interact and share posts with members.
 - **Authentication**: Sign up for new accounts and sign in for existing users.
-*
+
+
 # Application Installation Instructions
 
 
@@ -99,6 +100,11 @@ REACT_APP_BACKEND_URL=http://localhost:DB_PORT`
 `npm install`    # Install dependencies  
 `npm start`    # Start the frontend server
 
+
+
+# Link to a working application on the internet
+
+Link to the website: [ NordFlix](https://green-bay-0f0301810.4.azurestaticapps.net/)
 
 
 

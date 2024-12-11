@@ -1,3 +1,4 @@
+// Profile.js
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchFavorites, removeFromFavorites } from '../api/favoriteapi';
@@ -5,9 +6,9 @@ import Navigation from '../components/Navigation';
 import axios from 'axios';
 import styles from './ProfilePage.module.css';
 import UserContext from '../context/UserContext';
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
 
-const ITEMS_PER_GROUP = 5; // 5 movies + 5 TV series per page
+const ITEMS_PER_GROUP = 5;
 
 const Profile = () => {
   const [favorites, setFavorites] = useState([]);
@@ -29,8 +30,8 @@ const Profile = () => {
             favoriteItems.map(async ({ movie_id, type }) => {
               const endpoint =
                 type === 'movie'
-                  ? `https://api.themoviedb.org/3/movie/${movie_id}?api_key=8e00f8de49614d9ebf140af3901aa5b5`
-                  : `https://api.themoviedb.org/3/tv/${movie_id}?api_key=8e00f8de49614d9ebf140af3901aa5b5`;
+                  ? `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.REACT_APP_API_KEY}`
+                  : `https://api.themoviedb.org/3/tv/${movie_id}?api_key=${process.env.REACT_APP_API_KEY}`;
 
               const response = await fetch(endpoint);
               return { ...(await response.json()), type };
@@ -84,26 +85,21 @@ const Profile = () => {
     }
   }
 
-  // Group items by type
   const movies = favoriteDetails.filter((item) => item.type === 'movie');
   const tvSeries = favoriteDetails.filter((item) => item.type === 'tv');
 
-  // Mix items: 5 movies and 5 TV series per page
-  const mixedItems = [];
-  for (let i = 0; i < Math.max(movies.length, tvSeries.length); i++) {
-    if (i < movies.length) mixedItems.push(movies[i]);
-    if (i < tvSeries.length) mixedItems.push(tvSeries[i]);
-  }
-
-  // Pagination logic
-  const startIndex = (currentPage - 1) * ITEMS_PER_GROUP * 2;
-  const visibleMovies = movies.slice(startIndex / 2, startIndex / 2 + ITEMS_PER_GROUP);
-  const visibleSeries = tvSeries.slice(startIndex / 2, startIndex / 2 + ITEMS_PER_GROUP);
+  const startIndex = (currentPage - 1) * ITEMS_PER_GROUP;
+  const visibleMovies = movies.slice(startIndex, startIndex + ITEMS_PER_GROUP);
+  const visibleSeries = tvSeries.slice(startIndex, startIndex + ITEMS_PER_GROUP);
 
   const totalPages = Math.ceil(Math.max(movies.length, tvSeries.length) / ITEMS_PER_GROUP);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handlePageChange = (direction) => {
+    if (direction === 'next' && currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === 'prev' && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const shareableLink = user?.id
@@ -152,7 +148,9 @@ const Profile = () => {
 
         {visibleMovies.length > 0 && (
           <>
-            <h3>Movies</h3>
+            <div className={styles.moviesheading}>
+              <h3>Movies</h3>
+            </div>
             <div className={styles.moviesContainer}>
               {visibleMovies.map((item) => (
                 <div
@@ -184,7 +182,9 @@ const Profile = () => {
 
         {visibleSeries.length > 0 && (
           <>
-            <h3>TV Series</h3>
+            <div className={styles.moviesheading}>
+              <h3>TV Series</h3>
+            </div>
             <div className={styles.moviesContainer}>
               {visibleSeries.map((item) => (
                 <div
@@ -214,20 +214,23 @@ const Profile = () => {
           </>
         )}
 
-        {mixedItems.length > ITEMS_PER_GROUP && (
-          <div className={styles.pagination}>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => handlePageChange(i + 1)}
-                className={`${styles.pageButton} ${currentPage === i + 1 ? styles.activePage : ''
-                  }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className={styles.pagination}>
+          <button
+            onClick={() => handlePageChange('prev')}
+            disabled={currentPage === 1}
+            className={styles.pageButton}
+          >
+            Previous
+          </button>
+          <span><strong>{`Page ${currentPage} of ${totalPages}`}</strong></span>
+          <button
+            onClick={() => handlePageChange('next')}
+            disabled={currentPage === totalPages}
+            className={styles.pageButton}
+          >
+            Next
+          </button>
+        </div>
       </div>
       <Footer />
     </div>

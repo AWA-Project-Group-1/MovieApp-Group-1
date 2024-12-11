@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './SharedFavoritesPage.module.css';
 import logo from '../assets/images/movieapplogo.jpg';
+import Footer from '../components/Footer';
 
-const ITEMS_PER_PAGE = 10; // 5 movies + 5 series
+const ITEMS_PER_PAGE = 10;
 
 const SharedFavoritesPage = () => {
   const { userId } = useParams();
@@ -43,8 +44,8 @@ const SharedFavoritesPage = () => {
             try {
               const endpoint =
                 type === 'movie'
-                  ? `https://api.themoviedb.org/3/movie/${id}?api_key=8e00f8de49614d9ebf140af3901aa5b5`
-                  : `https://api.themoviedb.org/3/tv/${id}?api_key=8e00f8de49614d9ebf140af3901aa5b5`;
+                  ? `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}`
+                  : `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}`;
 
               const response = await fetch(endpoint);
               if (!response.ok) {
@@ -70,30 +71,21 @@ const SharedFavoritesPage = () => {
     fetchSharedFavorites();
   }, [userId]);
 
-  // Group items by type
   const movies = favorites.filter((item) => item.type === 'movie');
   const tvSeries = favorites.filter((item) => item.type === 'tv');
 
-  // Mix items: 5 movies and 5 TV series per page
-  const mixedItems = [];
-  for (let i = 0; i < Math.max(movies.length, tvSeries.length); i++) {
-    if (i < movies.length) mixedItems.push(movies[i]);
-    if (i < tvSeries.length) mixedItems.push(tvSeries[i]);
-  }
+  const startIndex = (currentPage - 1) * 5;
+  const visibleMovies = movies.slice(startIndex, startIndex + 5);
+  const visibleSeries = tvSeries.slice(startIndex, startIndex + 5);
 
-
-  // Pagination logic
-  const startIndexMovies = (currentPage - 1) * 5;
-  const startIndexSeries = (currentPage - 1) * 5;
-  const visibleMovies = movies.slice(startIndexMovies, startIndexMovies + 5);
-  const visibleSeries = tvSeries.slice(startIndexSeries, startIndexSeries + 5);
-
-  // Combine movies and series for the current page
-  const visibleItems = [...visibleMovies, ...visibleSeries];
   const totalPages = Math.ceil(Math.max(movies.length, tvSeries.length) / 5);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handlePageChange = (direction) => {
+    if (direction === 'next' && currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === 'prev' && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const handleCardClick = (item) => {
@@ -107,80 +99,74 @@ const SharedFavoritesPage = () => {
   return (
     <div className={styles.sharedFavoritesContainer}>
       <img src={logo} alt="Logo" className={styles.logo} />
-      <button
-        className={styles.homeButton}
-        onClick={() => navigate('/')}>
+      <button className={styles.homeButton} onClick={() => navigate('/')}>
         Go back to Homepage
       </button>
       <h1 className={styles.title}>Shared Favorites of {email}</h1>
-      {visibleItems.length > 0 ? (
+      {visibleMovies.length > 0 && (
         <>
-          {visibleItems.some((item) => item.type === 'movie') && (
-            <div className={styles.section}>
-              <h3 className={styles.sectionHeading}>Movies</h3>
-              <div className={styles.favoritesGrid}>
-                {visibleItems
-                  .filter((item) => item.type === 'movie')
-                  .map((item) => (
-                    <div
-                      key={item.id}
-                      className={styles.favoriteCard}
-                      onClick={() => handleCardClick(item)}
-                    >
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                        alt={item.title || item.name}
-                        className={styles.favoriteImage}
-                      />
-                      <h5>{item.title || item.name}</h5>
-                      <p>{item.release_date || item.first_air_date}</p>
-                    </div>
-                  ))}
+          <h3 className={styles.sectionHeading}>Movies</h3>
+          <div className={styles.favoritesGrid}>
+            {visibleMovies.map((item) => (
+              <div
+                key={item.id}
+                className={styles.favoriteCard}
+                onClick={() => handleCardClick(item)}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                  alt={item.title || item.name}
+                  className={styles.favoriteImage}
+                />
+                <h5>{item.title || item.name}</h5>
+                <p>{item.release_date || item.first_air_date}</p>
               </div>
-            </div>
-          )}
-          {visibleItems.some((item) => item.type === 'tv') && (
-            <div className={styles.section}>
-              <h3 className={styles.sectionHeading}>TV Series</h3>
-              <div className={styles.favoritesGrid}>
-                {visibleItems
-                  .filter((item) => item.type === 'tv')
-                  .map((item) => (
-                    <div
-                      key={item.id}
-                      className={styles.favoriteCard}
-                      onClick={() => handleCardClick(item)}
-                    >
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                        alt={item.title || item.name}
-                        className={styles.favoriteImage}
-                      />
-                      <h5>{item.title || item.name}</h5>
-                      <p>{item.release_date || item.first_air_date}</p>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
+            ))}
+          </div>
         </>
-      ) : (
-        <p>No favorites available.</p>
       )}
-      {mixedItems.length > ITEMS_PER_PAGE && (
-        <div className={styles.pagination}>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i + 1}
-              onClick={() => handlePageChange(i + 1)}
-              className={`${styles.pageButton} ${currentPage === i + 1 ? styles.activePage : ''
-                }`}
-            >
-              {i + 1}
-            </button>
-          ))}
-        </div>
+      {visibleSeries.length > 0 && (
+        <>
+          <h3 className={styles.sectionHeading}>TV Series</h3>
+          <div className={styles.favoritesGrid}>
+            {visibleSeries.map((item) => (
+              <div
+                key={item.id}
+                className={styles.favoriteCard}
+                onClick={() => handleCardClick(item)}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                  alt={item.title || item.name}
+                  className={styles.favoriteImage}
+                />
+                <h5>{item.title || item.name}</h5>
+                <p>{item.release_date || item.first_air_date}</p>
+              </div>
+            ))}
+          </div>
+        </>
       )}
+      <div className={styles.pagination}>
+        <button
+          onClick={() => handlePageChange('prev')}
+          disabled={currentPage === 1}
+          className={styles.pageButton}
+        >
+          Previous
+        </button>
+        <span>
+          <strong>{`Page ${currentPage} of ${totalPages}`}</strong>
+        </span>
+        <button
+          onClick={() => handlePageChange('next')}
+          disabled={currentPage === totalPages}
+          className={styles.pageButton}
+        >
+          Next
+        </button>
+      </div>
+      <Footer />
     </div>
   );
 };
