@@ -30,8 +30,8 @@ const Profile = () => {
             favoriteItems.map(async ({ movie_id, type }) => {
               const endpoint =
                 type === 'movie'
-                  ? `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.REACT_APP_API_KEY}`
-                  : `https://api.themoviedb.org/3/tv/${movie_id}?api_key=${process.env.REACT_APP_API_KEY}`;
+                  ? `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+                  : `https://api.themoviedb.org/3/tv/${movie_id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`;
 
               const response = await fetch(endpoint);
               return { ...(await response.json()), type };

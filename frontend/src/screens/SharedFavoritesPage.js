@@ -44,8 +44,8 @@ const SharedFavoritesPage = () => {
             try {
               const endpoint =
                 type === 'movie'
-                  ? `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}`
-                  : `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}`;
+                  ? `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+                  : `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`;
 
               const response = await fetch(endpoint);
               if (!response.ok) {
