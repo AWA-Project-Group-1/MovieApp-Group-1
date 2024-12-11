@@ -104,21 +104,21 @@
 
 @media (max-width: 480px) {
     .searchOverlay p {
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         margin-top: 0.1rem;
     }
 
     .searchOverlay h1 {
-        font-size: 1.4rem;
+        font-size: 1.9rem;
         /* Smaller font size for small screens */
     }
 
     .searchInput {
-        font-size: 0.5rem;
+        font-size: 0.6rem;
         /* Even smaller font size for small screens */
-        width: 70%;
+        width: 80%;
         /* Wider input field for smaller screens */
-        max-width: 600px;
+        max-width: 750px;
         /* Further reduce max-width */
         margin-top: 0.2rem;
         height: 20px;

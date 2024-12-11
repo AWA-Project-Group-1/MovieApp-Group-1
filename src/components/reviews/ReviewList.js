@@ -96,7 +96,7 @@ const ReviewList = ({ reviews, onDeleteReview, userReview }) => {
         <div>
             {/* User's Review (if available) */}
             {userReview && (
-                <div className="card mb-4 shadow-sm" style={{ border: '2px solid #d24747', margin: '15px' }}>
+                <div className="card mb-4 shadow-sm" style={{ border: '2px solid #d24747', margin: '15px', backgroundColor: 'rgb(244, 244, 249)' }}>
                     <div className="card-body">
                         <div className="d-flex justify-content-between mb-3">
                             <span><b>{userReview.email}</b></span>
@@ -127,7 +127,7 @@ const ReviewList = ({ reviews, onDeleteReview, userReview }) => {
 
                 {/* If there are no reviews */}
                 {totalReviews === 0 ? (
-                    <div className="text-center text-muted py-5">
+                    <div className="text-center text-muted py-5" style={{ border: '2px solid #d24747', backgroundColor: 'rgb(244, 244, 249)', borderRadius: '5px' }}>
                         <i className="bi bi-star" style={{ fontSize: '2rem', color: 'gray' }}></i>
                         <h5>No Reviews Yet</h5>
                         <p>Be the first to share your thoughts and help others!</p>
@@ -192,7 +192,7 @@ const ReviewList = ({ reviews, onDeleteReview, userReview }) => {
                         </div>
 
                         {sortedReviews.slice(0, visibleReviews).map((review) => (
-                            <div key={review.id} className="card mb-4 shadow-sm">
+                            <div key={review.id} className="card mb-4 shadow-sm" style={{ backgroundColor: 'rgb(244, 244, 249)' }}>
                                 <div className="card-body">
                                     <div className="d-flex justify-content-between mb-3">
                                         <span><b>{review.email}</b></span>
@@ -218,14 +218,14 @@ const ReviewList = ({ reviews, onDeleteReview, userReview }) => {
                                 onClick={handleLoadMore}
                                 className="btn btn-sm"
                                 style={{
-                                    backgroundColor: '#d24747',
+                                    backgroundColor: '#f23030',
                                     color: 'white',
                                     marginTop: '20px',
                                     marginLeft: 'auto',
                                     marginRight: '0',
                                     display: 'inline-block',
-                                    padding: '5px 10px', // Smaller padding for a smaller button
-                                    fontSize: '0.875rem'  // Smaller font size
+                                    padding: '5px 10px',
+                                    fontSize: '0.875rem'
                                 }}
                             >
                                 Get More Reviews
@@ -235,7 +235,7 @@ const ReviewList = ({ reviews, onDeleteReview, userReview }) => {
                     </>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 

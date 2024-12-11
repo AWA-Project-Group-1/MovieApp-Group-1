@@ -326,7 +326,7 @@ const MovieDetail = () => {
                         )
                     ) : (
                         <div className="text-center my-4">
-                            <p><b>Please <Link to="/sign-in" style={{ color: '#d24747' }}>log in</Link> to submit a review.</b></p>
+                            <p><b>Please <Link to="/sign-in" style={{ color: '#d24747' }}>sign in</Link> to submit a review.</b></p>
                         </div>
                     )}
                 </div>
