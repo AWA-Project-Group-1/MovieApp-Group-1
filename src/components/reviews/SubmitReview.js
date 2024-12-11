@@ -5,6 +5,7 @@ import Commenting from './Commenting';
 const SubmitReview = ({ onSubmitReview }) => {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
+    const [isHovered, setIsHovered] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,7 +29,13 @@ const SubmitReview = ({ onSubmitReview }) => {
                 <button
                     type="submit"
                     className="btn btn-danger btn-sm"
-                    style={{ width: '120px' }}
+                    style={{
+                        backgroundColor: isHovered ? '#a0183c' : '#f23030',
+                        width: '150px',
+                        transition: 'background-color 0.3s ease',
+                    }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                 >
                     Submit
                 </button>
