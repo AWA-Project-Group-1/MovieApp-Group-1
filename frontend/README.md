@@ -20,12 +20,16 @@ This project is designed for movie enthusiasts, providing features to search for
 - **APIs**:
   - **TMDB API**: Provides movie data such as title, release date, description, and cast.
   - **Finnkino API**: Supplies showtimes information.
+- **Deployment Environment**:
+  - **Azure**: Hosts the frontend application for reliable, scalable delivery.
+  - **Render**: Handles the backend services, ensuring smooth server-side operations and API integration.
+  - **Supabase**: Serves as the database platform, providing real-time data synchronization.
 
 ## Project Team Roles and Responsibilities
 
 - Yanwen He: Movies- and TVSeries Page, Showtimes,DetailPage, search/filter functionality
 - Ke Zhang: SignUp, SignIn, DeleteAccount
-- Suheda Sener: Reviews and Homepage
+- Suheda Sener: Reviews, Homepage, Testing
 - Shromona Hossain: Homepage
 - Thanh Nghi Vu Vo: Grouppage
 - Seraj Shekh: Grouppage
@@ -56,7 +60,7 @@ This project is designed for movie enthusiasts, providing features to search for
 - **Movie/TV Series Page**: View movie/TV cards and access detailed information (e.g., title, description, crew, cast). Authenticated users can provide reviews.
 - **Showtime Page**: Filter showtimes by location, date, or cinema, with links for ticket booking.
 - **Favorites Page**: Access and manage favorite movies/TV shows, share links, and delete accounts.
-- **Groups Page**: Create, join, or leave groups; interact and share posts with members.
+- **Groups Page**: Create, join, or leave groups; interact and share movies with members.
 - **Authentication**: Sign up for new accounts and sign in for existing users.
 
 
@@ -86,7 +90,6 @@ JWT_SECRET=a_secret_key_used_to_sign_JWT_tokens_for_authentication`
 
 ### Frontend (.env)
 `
-REACT_APP_BASE_URL=https://api.themoviedb.org/3
 REACT_APP_API_KEY=your_tmdb_api_key
 REACT_APP_BACKEND_URL=http://localhost:DB_PORT`
 
@@ -107,4 +110,6 @@ REACT_APP_BACKEND_URL=http://localhost:DB_PORT`
 Link to the website: [ NordFlix](https://green-bay-0f0301810.4.azurestaticapps.net/)
 
 
+# UI Wireframes
 
+[Click here](https://www.figma.com/design/zi6pgXkOJDHxmo1Uc9dH2r/Untitled?node-id=0-1&node-type=canvas&t=wo4FKkU53Lr8kMJH-0)
