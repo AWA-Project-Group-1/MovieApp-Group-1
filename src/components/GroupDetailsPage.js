@@ -35,55 +35,56 @@ const GroupDetailsPage = ({ groupId }) => {
   const [searchInput, setSearchInput] = useState("");
   const [groupMovie, setGroupMovie] = useState([]);
 
-  const movieTVSerialData = useContext(MoiveTVSerialContext);
+const movieTVSerialData = useContext(MoiveTVSerialContext); 
 
 
-  const fetchMovies = async (groupId) => {
+const fetchMovies = async (groupId) => {
+  try {
+    // Use axios to make the GET request to fetch the movies for the group
+    const response = await api.get(`/groups/${groupId}/movies`);
+
+    // Check if the fetch request is successful
+    if (response.status === 200) { 
+      const uniqueMovies = response.data.movies.filter((movie, index, self) =>
+        index === self.findIndex((m) => m.id === movie.id)
+      );
+      setGroupMovie(uniqueMovies);
+      console.log(`This is the response.data.movies  : ${uniqueMovies}`)
+    } else {
+      alert("Failed to fetch movie list.");
+    }
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    alert("Failed to fetch movie list. Please try again.");
+  }
+};
+
+// Use effect to fetch group and movie data when groupId changes
+useEffect(() => {
+  const fetchData = async () => {
     try {
-      // Use axios to make the GET request to fetch the movies for the group
-      const response = await api.get(`/groups/${groupId}/movies`);
-
-      // Check if the fetch request is successful
-      if (response.status === 200) {
-        const uniqueMovies = response.data.movies.filter((movie, index, self) =>
-          index === self.findIndex((m) => m.id === movie.id)
-        );
-        setGroupMovie(uniqueMovies);
-        console.log(`This is the response.data.movies  : ${uniqueMovies}`)
-      } else {
-        alert("Failed to fetch movie list.");
-      }
+      const groupResponse = await api.get(`/groups/${groupId}`);
+      setGroup(groupResponse.data);
+      fetchMovies(groupId);
     } catch (error) {
-      console.error("Error fetching movies:", error);
-      alert("Failed to fetch movie list. Please try again.");
+      console.error('Error fetching group details:', error);
+      alert('Failed to fetch group details.');
     }
   };
-
-  // Use effect to fetch group and movie data when groupId changes
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const groupResponse = await api.get(`/groups/${groupId}`);
-        setGroup(groupResponse.data);
-        fetchMovies(groupId);
-      } catch (error) {
-        console.error('Error fetching group details:', error);
-        alert('Failed to fetch group details.');
-      }
-    };
 
     if (groupId) {
       fetchData();
     }
   }, [groupId]);
 
-  const handleInputChange = (event) => {
-    setSearchInput(event.target.value);
-  };
+const handleInputChange = (event) => {
+  setSearchPerformed(false)
+  setSearchInput(event.target.value); 
+};
 
-  const handleSearch = () => {
-    setSearchPerformed(true);
-  };
+const handleSearch = () => {
+  setSearchPerformed(true); 
+};
 
   // Filter movies based on the search query
   const filteredTVMovies = movieTVSerialData.tvSeries?.filter((tvShow) =>
@@ -100,11 +101,11 @@ const GroupDetailsPage = ({ groupId }) => {
     .map((tvShow) => ({ ...tvShow, name: tvShow.name }))
     .concat(filteredMovies.map((movie) => ({ ...movie, name: movie.title }))); // Map movie title to "name"
 
-  // Remove duplicates based on the "id" and "name"
-  const uniqueFilteredMovies = combinedFilteredResults.filter(
-    (item, index, self) =>
-      index === self.findIndex((t) => t.id === item.id && t.name === item.name)
-  );
+// Remove duplicates based on the "id" and "name"
+const uniqueFilteredMovies = combinedFilteredResults.filter(
+  (item, index, self) =>
+    index === self.findIndex((t) => t.id === item.id && t.name === item.name)
+);
 
   const handleAddMovieToGroup = async (e, movie) => {
     e.preventDefault();
@@ -150,11 +151,11 @@ const GroupDetailsPage = ({ groupId }) => {
       }
     }
 
-  }
-  // /:groupId/delete-movies/:movieId
-  const handleDelete = async (movieId) => {
-    const userId = user.id;
-    try {
+}
+// /:groupId/delete-movies/:movieId
+const handleDelete = async (movieId) => {
+  const userId= user.id;
+  try {
       const response = await api.delete(`/groups/${groupId}/delete-movies/${movieId}`, {
         data: { userId }, // Include userId in the request body
       });
@@ -269,71 +270,71 @@ const GroupDetailsPage = ({ groupId }) => {
           </>
         )}
 
-        {/* Admin Delete Button */}
-        <div className={styles["delete-leave-back-button-container"]}>
-          {/* Search input and button  he added*/}
-          <div className={styles["input-button-container"]}>
-            <div className={styles["input-container"]}>
-              <input
-                value={searchInput} // Set the value to the searchInput state
-                onChange={handleInputChange} // Update state when user types
-                placeholder="Search movies or tv "
-              />
-            </div>
-
-            <button onClick={handleSearch}>Search</button>
-
-
-          </div>
-
-          {searchPerformed ? (
-            uniqueFilteredMovies.length === 0 ? (
-              <p>No movies or TV series found.</p>
-            ) : (
-              uniqueFilteredMovies.map((item) => (
-                <div key={item.id || item.name} className={styles['searchedmovie-container']}>
-                  <h1>Movies Searched for Group: {group.name}</h1>
-                  <div className={styles['productcards_container']}>
-                    <div className={styles['product-card-framework']}>
-                      <div className={styles['image-container']}>
-                        <img
-                          className={styles['product-card']}
-                          src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                          alt={item.name || item.title || "Untitled"}
-                        />
+                {/* Admin Delete Button */}
+                  <div className={styles["delete-leave-back-button-container"]}>
+                      {/* Search input and button  he added*/}
+                      <div className={styles["input-button-container"]}>
+                         <div className={styles["input-container"]}>
+                          <input 
+                                value={searchInput} // Set the value to the searchInput state
+                                onChange={handleInputChange} // Update state when user types
+                                placeholder="Search movies or tv "
+                              />
+                         </div>
+                          
+                            <button onClick={handleSearch}>Search</button>
+                           
+                            
                       </div>
-                      <div className={styles['text-container']}>
-                        <h5>
-                          {item.name?.length > 17
-                            ? `${item.name.slice(0, 17)}...`
-                            : item.title?.length > 17
-                              ? `${item.title.slice(0, 17)}...`
-                              : item.name || item.title || "Untitled"}
-                        </h5>
-                        <p>
-                          {item.overview
-                            ? `${item.overview.slice(0, 17)}...`
-                            : "No description"}
-                        </p>
-                        <div className={styles['button-container']}>
-                          <button onClick={(e) => handleAddMovieToGroup(e, item)} className={styles['button-click']}>
-                            Add to Group List
-                          </button>
-                        </div>
+                          
+                  {searchPerformed ? (
+                      uniqueFilteredMovies.length === 0 ? (
+                        <p>No movies or TV series found.</p>
+                      ) : (
+                        uniqueFilteredMovies.map((item) => (
+                          <div key={item.id || item.name} className={styles['searchedmovie-container']}>
+                            <h1>Movies Searched for Group: {group.name}</h1>
+                            <div className={styles['productcards_container']}>
+                              <div className={styles['product-card-framework']}>
+                                <div className={styles['image-container']}>
+                                  <img
+                                    className={styles['product-card']}
+                                    src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                                    alt={item.name || item.title || "Untitled"}
+                                  />
+                                </div>
+                                <div className={styles['text-container']}>
+                                  <h5>
+                                    {item.name?.length > 17
+                                      ? `${item.name.slice(0, 17)}...`
+                                      : item.title?.length > 17
+                                      ? `${item.title.slice(0, 17)}...`
+                                      : item.name || item.title || "Untitled"}
+                                  </h5>
+                                  <p>
+                                    {item.overview
+                                      ? `${item.overview.slice(0, 17)}...`
+                                      : "No description"}
+                                  </p>
+                                  <div className={styles['button-container']}>
+                                    <button onClick={(e) => handleAddMovieToGroup(e, item)} className={styles['button-click']}>
+                                      Add to Group List
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      )
+                    ) : (
+                      <div className={styles['reminder-container']}>
+                        <p>Please enter a search term to find movies or TV series.</p>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )
-          ) : (
-            <div className={styles['reminder-container']}>
-              <p>Please enter a search term to find movies or TV series.</p>
-            </div>
-          )}
+                    )}
 
 
-
+              
 
 
 
