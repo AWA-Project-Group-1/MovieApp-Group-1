@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Footer.module.css";  // Import the CSS module
-import logo from "../assets/images/movieapplogo.jpg";
+import logo from "../assets/images/footerlogo.png";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";  // Import Link from react-router-dom
 
