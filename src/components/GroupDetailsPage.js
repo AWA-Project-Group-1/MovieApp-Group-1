@@ -29,15 +29,12 @@ const GroupDetailsPage = ({groupId}) => {
   }, [id, fetchGroupDetails]);
 
 
-// heyanwen has added for the search functionality
-  // const [searchQuery, setSearchQuery] = useState('');
-  // Add Search Input Change Handler
+// heyanwen has added for the search functionality , add fnctionality and display functionality
+
 const [searchPerformed, setSearchPerformed] = useState(false); 
 const [searchInput, setSearchInput] = useState("");
 const [groupMovie, setGroupMovie] = useState([]);
 
-
-// Assuming `MoiveTVSerialContext` provides movie data (tvSeries) and the user/group context is set
 const movieTVSerialData = useContext(MoiveTVSerialContext); 
 
 
@@ -47,8 +44,7 @@ const fetchMovies = async (groupId) => {
     const response = await api.get(`/groups/${groupId}/movies`);
 
     // Check if the fetch request is successful
-    if (response.status === 200) {
-      // Update the group movie list with the fetched movies
+    if (response.status === 200) { 
       const uniqueMovies = response.data.movies.filter((movie, index, self) =>
         index === self.findIndex((m) => m.id === movie.id)
       );
@@ -86,11 +82,10 @@ const handleInputChange = (event) => {
 };
 
 const handleSearch = () => {
-  setSearchPerformed(true); // Mark that a search has been performed
+  setSearchPerformed(true); 
 };
 
 // Filter movies based on the search query
-// Filter TV Series
 const filteredTVMovies = movieTVSerialData.tvSeries?.filter((tvShow) =>
   searchInput ? tvShow.name.toLowerCase().includes(searchInput.toLowerCase()) : true
 ) || [];
@@ -100,9 +95,9 @@ const filteredMovies = movieTVSerialData.movies?.filter((movie) =>
   searchInput ? movie.title.toLowerCase().includes(searchInput.toLowerCase()) : true
 ) || [];
 
-// Normalize properties to "name" and combine results
+
 const combinedFilteredResults = filteredTVMovies
-  .map((tvShow) => ({ ...tvShow, name: tvShow.name })) // Ensure TV series have "name"
+  .map((tvShow) => ({ ...tvShow, name: tvShow.name })) 
   .concat(filteredMovies.map((movie) => ({ ...movie, name: movie.title }))); // Map movie title to "name"
 
 // Remove duplicates based on the "id" and "name"
@@ -125,7 +120,7 @@ const handleAddMovieToGroup = async (e, movie) => {
       groupId: groupId,
       movieId: movie.id,
       title : movie.name,
-      description: "", // Optional
+      description: "", 
       posterPath: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
     };
 
@@ -345,7 +340,7 @@ const handleAddMovieToGroup = async (e, movie) => {
                             />
                           </div>
                           <div className={styles['text-container']}>
-                            <h5>{movie.movie_title}</h5> {/* Update the title field name */}
+                            <h5>{movie.movie_title.length > 17 ? `${movie.movie_title.slice(0, 17)}...` : movie.movie_title}</h5> {/* Update the title field name */}
                             {/* <p>{movie.post_content || "No description available."}</p> Update the description field */}
                             <div className={styles['addfavourites-button-container']}>
                               <button onClick={(e) => handleAddMovieToGroup(e, movie)} className={styles['button-click']}>

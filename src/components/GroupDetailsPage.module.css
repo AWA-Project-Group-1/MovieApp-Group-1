@@ -251,16 +251,8 @@ ul li button:hover {
   margin-top:20px;
 }
 
-.button-click {
-  
+.button-click {  
   white-space: nowrap; 
   overflow: hidden; 
-
-  width: 200px!important;
+  width: 150px!important;
 }
-/* .reminder-container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
-} */
