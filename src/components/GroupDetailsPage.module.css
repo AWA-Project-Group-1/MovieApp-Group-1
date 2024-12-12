@@ -1,4 +1,11 @@
 /* GroupDetailsPage.module.css */
+
+.whole-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
 .container {
   padding: 20px;
   background-color: #f4f6f9;
@@ -122,6 +129,35 @@ ul li button:hover {
  
 }
 
+
+@media (max-width: 450px)  {
+  .productcards_container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Use 2 columns for larger width */
+    justify-content: center;  
+    margin: 0 auto;  
+    /* align-items: center;    */
+    padding: 20px;   
+    gap: 20px; 
+    max-width: 1200px; /* Limit the width */
+  
+   
+  }
+}
+@media (min-width: 451px) and (max-width: 820px)  {
+  .productcards_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Use 2 columns for larger width */
+    justify-content: center;  
+    margin: 0 auto;  
+    /* align-items: center;    */
+    padding: 20px;   
+    gap: 20px; 
+    max-width: 1200px; /* Limit the width */
+  
+   
+  }
+}
 .product-card-framework {
   display: flex;
   background-color: white;
@@ -259,3 +295,5 @@ ul li button:hover {
 .text-container p{
   margin-bottom: 10px;
 }
+
+

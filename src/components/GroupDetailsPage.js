@@ -151,7 +151,24 @@ const handleAddMovieToGroup = async (e, movie) => {
   }
 
 }
-
+// /:groupId/delete-movies/:movieId
+const handleDelete = async (movieId) => {
+  const userId= user.id;
+  try {
+      const response = await api.delete(`/groups/${groupId}/delete-movies/${movieId}`, {
+          data: { userId }, // Include userId in the request body
+      });
+      if (response.data.success) {
+          alert('Movie deleted successfully!');
+          groupMovie(); // Call to refresh the movies after deletion
+      } else {
+          alert(response.data.message || 'Failed to delete movie.');
+      }
+  } catch (error) {
+      console.error('Error deleting movie:', error.message);
+      alert('An error occurred while deleting the movie.');
+  }
+};
 
 
 
@@ -204,7 +221,7 @@ const handleAddMovieToGroup = async (e, movie) => {
   }
 
   return (
-    <div>
+    <div className={styles["whole-container"]}>
             <div>
                 <Navigation />
             </div>
@@ -270,64 +287,63 @@ const handleAddMovieToGroup = async (e, movie) => {
                       </div>
                           
                       {uniqueFilteredMovies.length > 0 ? (
-                        <div className={styles['searchedmovie-container']}> 
-                          <h1>Movies Searched for Group: {group.name}</h1>
-                          
-                          <div className={styles['productcards_container']}>
-                            {searchPerformed ? (
-                              uniqueFilteredMovies.length === 0 ? (
-                                <p>No movies or TV series found.</p>
-                              ) : (
-                                // Display filtered movies
-                                uniqueFilteredMovies.map((item) => (
-                                  <div
-                                    key={`${item.id}-${item.name}`} // Combine id and name to ensure uniqueness
-                                    className={styles['product-card-framework']}
-                                  >
-                                    <div className={styles['image-container']}>
-                                      <img
-                                        className={styles['product-card']}
-                                        src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                                        alt={item.name}
-                                      />
-                                    </div>
-                                    <div className={styles['text-container']}>
-                                    <h5>
-                                        {(item.name && item.name.length > 17) 
-                                          ? `${item.name.slice(0, 17)}...` 
-                                          : (item.title && item.title.length > 17) 
-                                          ? `${item.title.slice(0, 17)}...` 
-                                          : item.name || item.title}
-                                      </h5>
-                                      <p>
-                                {item.overview
-                                  ? `${item.overview.slice(0, 17)}...` 
-                                  : "No description available."}
-                              </p>
-                                      {/* <p>{item.first_air_date || item.release_date}</p> */}
-                                      <div className={styles['button-container']}>
-                                        <div className={styles['addfavourites-button-container']}>
-                                          <button onClick={(e) => handleAddMovieToGroup(e, item)} className={styles['button-click']}>
-                                            Add to Group List
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                ))
-                              )
-                            ) : (
-                              <div className={styles['reminder-container']}>
-                                <p >Please enter a search term to find movies or TV series.</p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ) : (
-                        // When there are no filtered movies to display
-                        <p>No movies found for this group.</p>
-                      )}
-          
+  <div className={styles['searchedmovie-container']}>
+    <h1>Movies Searched for Group: {group.name}</h1>
+
+    <div className={styles['productcards_container']}>
+      {searchPerformed ? (
+        uniqueFilteredMovies.length === 0 ? (
+          <p>No movies or TV series found.</p>
+        ) : (
+          // Display filtered movies
+          uniqueFilteredMovies.map((item) => (
+            <div
+              key={`${item.id}-${item.name}`} // Combine id and name to ensure uniqueness
+              className={styles['product-card-framework']}
+            >
+              <div className={styles['image-container']}>
+                <img
+                  className={styles['product-card']}
+                  src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                  alt={item.name}
+                />
+              </div>
+              <div className={styles['text-container']}>
+                <h5>
+                  {(item.name && item.name.length > 17)
+                    ? `${item.name.slice(0, 17)}...`
+                    : (item.title && item.title.length > 17)
+                    ? `${item.title.slice(0, 17)}...`
+                    : item.name || item.title}
+                </h5>
+                <p>
+                  {item.overview
+                    ? `${item.overview.slice(0, 17)}...`
+                    : "No description"}
+                </p>
+                <div className={styles['button-container']}>
+                  <div className={styles['addfavourites-button-container']}>
+                    <button onClick={(e) => handleAddMovieToGroup(e, item)} className={styles['button-click']}>
+                      Add to Group List
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        )
+      ) : (
+        <div className={styles['reminder-container']}>
+          <p>Please enter a search term to find movies or TV series.</p>
+        </div>
+      )}
+    </div>
+  </div>
+) : (
+  // When there are no filtered movies to display
+  <p>No movies found for this group.</p>
+)}
+
 
 
               
@@ -363,11 +379,11 @@ const handleAddMovieToGroup = async (e, movie) => {
                             <p>
                                 {movie.post_content 
                                   ? `${movie.post_content.slice(0, 17)}...` 
-                                  : "No description available."}
+                                  : "No description"}
                               </p>
-                                                          {/* Update the description field */}
+                                                        
                             <div className={styles['addfavourites-button-container']}>
-                              <button className={styles['button-click']}>
+                              < button className={styles['button-click']} onClick={() => handleDelete(movie.movie_id)}>
                                 Delete Movie
                               </button>
                             </div>

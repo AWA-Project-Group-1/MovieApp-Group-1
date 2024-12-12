@@ -434,3 +434,51 @@ export const displayMovieToGroup = async (req, res) => {
         });
     }
 };
+
+// for the delete movie for group:
+export const deleteMovieFromGroup = async (req, res) => {
+    console.log('DELETE request received:', req.params, req.body);
+    const { groupId, movieId } = req.params; // Extract groupId and movieId from URL params
+    const { userId } = req.body; // Extract userId from the request body
+
+    // Validate required fields
+    if (!groupId || !movieId || !userId) {
+        return res.status(400).json({
+            success: false,
+            message: 'Group ID, Movie ID, and User ID are required.',
+        });
+    }
+
+    try {
+        // Check if the group exists
+        const groupResult = await pool.query('SELECT * FROM groups WHERE id = $1', [groupId]);
+        if (groupResult.rowCount === 0) {
+            return res.status(404).json({ success: false, message: 'Group not found.' });
+        }
+
+        // Check if the movie exists in the group
+        const movieResult = await pool.query(
+            'SELECT * FROM groupContent WHERE group_id = $1 AND movie_id = $2',
+            [groupId, movieId]
+        );
+        if (movieResult.rowCount === 0) {
+            return res.status(404).json({ success: false, message: 'Movie not found in the group.' });
+        }
+
+        // Delete the movie from the groupContent table
+        const deleteQuery = 'DELETE FROM groupContent WHERE group_id = $1 AND movie_id = $2 AND users_id = $3';
+        await pool.query(deleteQuery, [groupId, movieId, userId]);
+
+        res.status(200).json({
+            success: true,
+            message: 'Movie deleted successfully from the group.',
+        });
+    } catch (error) {
+        console.error('Error deleting movie:', error.message);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error.',
+            error: error.message, // Log error message for debugging
+        });
+    }
+};
