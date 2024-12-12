@@ -110,4 +110,6 @@ REACT_APP_BACKEND_URL=http://localhost:DB_PORT`
 Link to the website: [ NordFlix](https://green-bay-0f0301810.4.azurestaticapps.net/)
 
 
+# UI Wireframes
 
+[Click here](https://www.figma.com/design/zi6pgXkOJDHxmo1Uc9dH2r/Untitled?node-id=0-1&node-type=canvas&t=wo4FKkU53Lr8kMJH-0)
