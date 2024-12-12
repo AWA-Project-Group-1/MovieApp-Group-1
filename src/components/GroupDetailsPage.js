@@ -24,6 +24,7 @@ const GroupDetailsPage = ({ groupId }) => {
     const fetchData = async () => {
       const groupData = await fetchGroupDetails(id); // Fetch details by group ID
       setGroup(groupData);
+    
     };
     fetchData();
   }, [id, fetchGroupDetails]);
@@ -231,7 +232,13 @@ const handleDelete = async (movieId) => {
 
       <div className={styles.container}>
         <h1>{group.name}</h1>
-        <p>{group.description}</p>
+        <div>
+
+          <h3>Description</h3>
+          <p>{group.description}</p>
+
+        </div>
+        
 
         <h3>Members</h3>
         <ul>
