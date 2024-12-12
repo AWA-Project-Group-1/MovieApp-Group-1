@@ -256,3 +256,6 @@ ul li button:hover {
   overflow: hidden; 
   width: 150px!important;
 }
+.text-container p{
+  margin-bottom: 10px;
+}

@@ -120,7 +120,7 @@ const handleAddMovieToGroup = async (e, movie) => {
       groupId: groupId,
       movieId: movie.id,
       title : movie.name,
-      description: "", 
+      description: movie.overview, 
       posterPath: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
     };
 
@@ -292,8 +292,19 @@ const handleAddMovieToGroup = async (e, movie) => {
                                       />
                                     </div>
                                     <div className={styles['text-container']}>
-                                      <h5>{item.name.length > 17 ? `${item.name.slice(0, 17)}...` : item.name}</h5>
-                                      <p>{item.first_air_date}</p>
+                                    <h5>
+                                        {(item.name && item.name.length > 17) 
+                                          ? `${item.name.slice(0, 17)}...` 
+                                          : (item.title && item.title.length > 17) 
+                                          ? `${item.title.slice(0, 17)}...` 
+                                          : item.name || item.title}
+                                      </h5>
+                                      <p>
+                                {item.overview
+                                  ? `${item.overview.slice(0, 17)}...` 
+                                  : "No description available."}
+                              </p>
+                                      {/* <p>{item.first_air_date || item.release_date}</p> */}
                                       <div className={styles['button-container']}>
                                         <div className={styles['addfavourites-button-container']}>
                                           <button onClick={(e) => handleAddMovieToGroup(e, item)} className={styles['button-click']}>
@@ -340,10 +351,23 @@ const handleAddMovieToGroup = async (e, movie) => {
                             />
                           </div>
                           <div className={styles['text-container']}>
-                            <h5>{movie.movie_title.length > 17 ? `${movie.movie_title.slice(0, 17)}...` : movie.movie_title}</h5> {/* Update the title field name */}
-                            {/* <p>{movie.post_content || "No description available."}</p> Update the description field */}
+                          <h5>
+                            {(movie.movie_title&& movie.movie_title.length > 17) 
+                              ? `${movie.movie_title.slice(0, 17)}...` 
+                              : (movie.movie_title && movie.movie_title.length > 17) 
+                              ? `${movie.movie_title.slice(0, 17)}...` 
+                              : movie.movie_title || movie.movie_title}
+                          </h5>
+                            {/* <h5>{movie.movie_title.length > 17 ? `${movie.movie_title.slice(0, 17)}...` : movie.movie_title}</h5> Update the title field name */}
+                            {/* <p>{movie.first_air_date || movie.release_date}</p> */}
+                            <p>
+                                {movie.post_content 
+                                  ? `${movie.post_content.slice(0, 17)}...` 
+                                  : "No description available."}
+                              </p>
+                                                          {/* Update the description field */}
                             <div className={styles['addfavourites-button-container']}>
-                              <button onClick={(e) => handleAddMovieToGroup(e, movie)} className={styles['button-click']}>
+                              <button className={styles['button-click']}>
                                 Delete Movie
                               </button>
                             </div>
