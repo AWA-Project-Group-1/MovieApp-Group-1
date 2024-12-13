@@ -61,14 +61,8 @@ CREATE TABLE groupContent (
   movie_id INT,
   movie_title VARCHAR(255),
   movie_poster_path VARCHAR(255),
-  show_time_id INT,
-  show_time_title TIMESTAMP,
-  show_time_start TIMESTAMP,
-  show_time_end TIMESTAMP,
-  show_time_image VARCHAR(255),
   CONSTRAINT fk_groupContent_groups FOREIGN KEY (group_id) REFERENCES groups (id),
   CONSTRAINT fk_groupContent_users FOREIGN KEY (users_id) REFERENCES users(id)
-
 );
 
 -- Table: groupMembers
