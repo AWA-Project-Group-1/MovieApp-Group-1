@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState,useCallback } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import GroupContext from "../context/GroupProvider";
 import UserContext from "../context/UserContext"; // Import UserContext to get current user
@@ -9,89 +9,102 @@ import Footer from "../components/Footer"
 // import TVCards from "../components/TVCards"
 // import MovieCards from "../components/MovieCards";
 import { MoiveTVSerialContext } from "../context/MoiveTVSerialProvider"
+import { RiAlignItemBottomLine } from "react-icons/ri";
 import api from "../services/api";
 const GroupDetailsPage = () => {
-  // const { id } = useParams(); // Get the group ID from the URL
-  const { fetchGroupDetails, removeMember, acceptJoinRequest, declineJoinRequest, leaveGroup, deleteGroup } = useContext(GroupContext);
+  const { id:groupId } = useParams(); // Get the group ID from the URL
+  const { fetchGroupDetails, removeMember, acceptJoinRequest, declineJoinRequest, leaveGroup, deleteGroup,  addMovieToGroup } = useContext(GroupContext);
   const { user } = useContext(UserContext); // Access user context
   const [group, setGroup] = useState(null);
- 
-  const { id: groupId } = useParams(); 
-
+  const movieTVSerialData = useContext(MoiveTVSerialContext);
   const navigate = useNavigate();
 
-  // Fetch the group details when the component mounts
-  const [searchPerformed, setSearchPerformed] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [groupMovie, setGroupMovie] = useState([]);
-  const movieTVSerialData = useContext(MoiveTVSerialContext); 
-  const fetchMovies = useCallback(async (groupId) => {
-    try {
-      const response = await api.get(`/groups/${groupId}/movies`);
-      if (response.status === 200) {
-        const uniqueMovies = response.data.movies.filter((movie, index, self) =>
-          index === self.findIndex((m) => m.id === movie.id)
-        );
-        setGroupMovie(uniqueMovies);
-        console.log("Fetched unique movies:", uniqueMovies);
+ 
+const [searchPerformed, setSearchPerformed] = useState(false); 
+const [searchInput, setSearchInput] = useState("");
+const [groupMovie, setGroupMovie] = useState([]);
+const [noMoviesMessage, setNoMoviesMessage] = useState("");  // Message when no movies
+
+
+
+const fetchMovies = async (groupId) => {
+  try {
+    // Use axios to make the GET request to fetch the movies for the group
+    const response = await api.get(`/groups/${groupId}/movies`);
+
+    // Check if the fetch request is successful
+    if (response.status === 200) {
+      // Update the group movie list with the fetched movies
+      const uniqueMovies = response.data.movies.filter((movie, index, self) =>
+        index === self.findIndex((m) => m.id === movie.id)
+      );
+
+      // If no movies are found, set the message
+      if (uniqueMovies.length === 0) {
+        setNoMoviesMessage("No movies available for this group.");
       } else {
-        console.error("Unexpected response status:", response.status);
-        alert("Failed to fetch movie list.");
+        setNoMoviesMessage("");  // Reset message if movies exist
       }
-    } catch (error) {
-      console.error("Error fetching movies:", error);
+
+      setGroupMovie(uniqueMovies);
+      console.log(`Fetched unique movies: ${uniqueMovies}`);
+    } else {
+      alert("Failed to fetch movie list. Response status: " + response.status);
+    }
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+
+    // Check if the error is due to a 404 (meaning no movies are found) or any other network-related issue
+    if (error.response && error.response.status === 404) {
+      setNoMoviesMessage("No movies available for this group.");
+    } else {
       alert("Failed to fetch movie list. Please try again.");
     }
-  }, []);
-
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!groupId) {
-        console.error("Group ID is undefined or null.");
-        return;
-      }
-      try {
-        const groupData = await fetchGroupDetails(groupId); 
-        setGroup(groupData);
-        await fetchMovies(groupId); 
-      } catch (error) {
-        console.error("Error fetching group data or movies:", error);
-      }
-    };
-    fetchData();
-  }, [groupId, fetchGroupDetails, fetchMovies]);
-
-  if (!group) {
-    return <div>Loading group details...</div>;
   }
+};
 
-  
-
+// Fetch group details and movie data when groupId changes
+useEffect(() => {
+  const fetchData = async () => {
+    if (!groupId) {
+      console.error("Group ID is undefined or null.");
+      return;
+    }
+    try {
+      const groupData = await fetchGroupDetails(groupId); // Fetch group details
+      setGroup(groupData);
+      await fetchMovies(groupId); // Fetch movies after group details
+    } catch (error) {
+      console.error("Error fetching group data or movies:", error);
+    }
+  };
+  fetchData();
+}, [groupId, fetchGroupDetails]);
 
 const handleInputChange = (event) => {
-  setSearchPerformed(false)
+  setSearchPerformed(false);
   setSearchInput(event.target.value); 
 };
 
 const handleSearch = () => {
-  setSearchPerformed(true); 
+  setSearchPerformed(true); // Mark that a search has been performed
 };
 
-  // Filter movies based on the search query
-  const filteredTVMovies = movieTVSerialData.tvSeries?.filter((tvShow) =>
-    searchInput ? tvShow.name.toLowerCase().includes(searchInput.toLowerCase()) : true
-  ) || [];
+// Filter movies based on the search query
+// Filter TV Series
+const filteredTVMovies = movieTVSerialData.tvSeries?.filter((tvShow) =>
+  searchInput ? tvShow.name.toLowerCase().includes(searchInput.toLowerCase()) : true
+) || [];
 
-  // Filter Movies
-  const filteredMovies = movieTVSerialData.movies?.filter((movie) =>
-    searchInput ? movie.title.toLowerCase().includes(searchInput.toLowerCase()) : true
-  ) || [];
+// Filter Movies
+const filteredMovies = movieTVSerialData.movies?.filter((movie) =>
+  searchInput ? movie.title.toLowerCase().includes(searchInput.toLowerCase()) : true
+) || [];
 
-
-  const combinedFilteredResults = filteredTVMovies
-    .map((tvShow) => ({ ...tvShow, name: tvShow.name }))
-    .concat(filteredMovies.map((movie) => ({ ...movie, name: movie.title }))); // Map movie title to "name"
+// Normalize properties to "name" and combine results
+const combinedFilteredResults = filteredTVMovies
+  .map((tvShow) => ({ ...tvShow, name: tvShow.name })) // Ensure TV series have "name"
+  .concat(filteredMovies.map((movie) => ({ ...movie, name: movie.title }))); // Map movie title to "name"
 
 // Remove duplicates based on the "id" and "name"
 const uniqueFilteredMovies = combinedFilteredResults.filter(
@@ -99,90 +112,52 @@ const uniqueFilteredMovies = combinedFilteredResults.filter(
     index === self.findIndex((t) => t.id === item.id && t.name === item.name)
 );
 
-  const handleAddMovieToGroup = async (e, movie) => {
-    e.preventDefault();
-    try {
-      const userId = user.id; 
-      const groupId = group.id;
+const handleAddMovieToGroup = async (e, movie) => {
+  e.preventDefault();
+  try {
+    const userId = user.id; // Assume available in context or state
+    const groupId = group.id; // Assume available in context or state
 
-      console.log("User ID:", userId);
-      console.log("Group ID:", groupId);
+    console.log("User ID:", userId);
+    console.log("Group ID:", groupId);
 
-      const movieData = {
-        userId: userId,
-        groupId: groupId,
-        movieId: movie.id,
-        title: movie.name,
-        description: movie.overview,
-        posterPath: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-      };
+    const movieData = {
+      userId: userId,
+      groupId: groupId,
+      movieId: movie.id,
+      title : movie.name,
+      description: "", // Optional
+      posterPath: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+    };
 
-      // Use axios to make the POST request
-      const response = await api.post(`/groups/${groupId}/add-movie`, movieData);
+    // Use axios to make the POST request
+    const response = await api.post(`/groups/${groupId}/add-movie`, movieData);
 
-      console.log("Movie Data:", movieData);
+    console.log("Movie Data:", movieData);
 
-      // Check if the response is successful
-      if (response.status !== 201) {
-        throw new Error("Failed to add movie to group");
-      }
-
-      // Update the group movie list
-      // setGroupMovie((prevMovies) => [...prevMovies, response.data.movie]);
-      fetchMovies(groupId);
-      alert("Movie added successfully!");
-    } catch (error) {
-      if (error.response) {
-        // API specific error
-        console.error("API Error:", error.response.data);
-        alert(error.response.data.message || "Failed to add movie to the group.");
-      } else {
-        // Network error or other issues
-        console.error("Error adding movie to group:", error.message);
-        alert("Failed to add movie to the group. Please try again.");
-      }
+    // Check if the response is successful
+    if (response.status !== 201) {
+      throw new Error("Failed to add movie to group");
     }
+
+    // Update the group movie list
+    // setGroupMovie((prevMovies) => [...prevMovies, response.data.movie]);
+    fetchMovies(groupId); 
+    alert("Movie added successfully!");
+  } catch (error) {
+    if (error.response) {
+      // API specific error
+      console.error("API Error:", error.response.data);
+      alert(error.response.data.message || "Failed to add movie to the group.");
+    } else {
+      // Network error or other issues
+      console.error("Error adding movie to group:", error.message);
+      alert("Failed to add movie to the group. Please try again.");
+    }
+  }
 
 }
 
-
-// useEffect(() => {
-//   const fetchData = async () => {
-//     try {
-//       const groupData = await fetchGroupDetails(groupId);
-//       setGroup(groupData);
-//       fetchMovies(groupId);
-//     } catch (error) {
-//       console.error("Error fetching group details:", error);
-//     }
-//   };
-
-//   if (groupId) {
-//     fetchData();
-//   }
-// }, [groupId, fetchGroupDetails, fetchMovies]);
-
-
-
-
-// /:groupId/delete-movies/:movieId
-const handleDelete = async (movieId) => {
-  const userId= user.id;
-  try {
-      const response = await api.delete(`/groups/${groupId}/delete-movies/${movieId}`, {
-        data: { userId }, // Include userId in the request body
-      });
-      if (response.data.success) {
-        alert('Movie deleted successfully!');
-        groupMovie(); // Call to refresh the movies after deletion
-      } else {
-        alert(response.data.message || 'Failed to delete movie.');
-      }
-    } catch (error) {
-      console.error('Error deleting movie:', error.message);
-      alert('An error occurred while deleting the movie.');
-    }
-  };
 
 
 
@@ -235,59 +210,53 @@ const handleDelete = async (movieId) => {
   }
 
   return (
-    <div className={styles["whole-container"]}>
-      <div>
-        <Navigation />
-      </div>
+    <div>
+            <div>
+                <Navigation />
+            </div>
+          
 
 
+            <div className={styles.container}>
+              <h1>{group.name}</h1>
+              <p>{group.description}</p>
 
-      <div className={styles.container}>
-        <h1>{group.name}</h1>
-        <div>
-
-          <h3>Description</h3>
-          <p>{group.description}</p>
-
-        </div>
-        
-
-        <h3>Members</h3>
-        <ul>
-          {group.members.length > 0 ? (
-            group.members.map((member) => (
-              <li key={member.id}>
-                {member.email} {member.role === 'admin' && <span>(Admin)</span>}
-                {/* Show "Remove Member" button only for admin */}
-                {isOwner && member.id !== user.id && (
-                  <button onClick={() => handleRemoveMember(member.id)}>Remove Member</button>
+              <h3>Members</h3>
+              <ul>
+                {group.members.length > 0 ? (
+                  group.members.map((member) => (
+                    <li key={member.id}>
+                      {member.email} {member.role === 'admin' && <span>(Admin)</span>}
+                      {/* Show "Remove Member" button only for admin */}
+                      {isOwner && member.id !== user.id && (
+                        <button onClick={() => handleRemoveMember(member.id)}>Remove Member</button>
+                      )}
+                    </li>
+                  ))
+                ) : (
+                  <p>No members yet.</p>
                 )}
-              </li>
-            ))
-          ) : (
-            <p>No members yet.</p>
-          )}
-        </ul>
+              </ul>
 
-        {/* Display join requests only if the current user is the owner */}
-        {isOwner && (
-          <>
-            <h3>Pending Join Requests</h3>
-            <ul>
-              {group.joinRequests.length > 0 ? (
-                group.joinRequests.map((request) => (
-                  <li key={request.request_id}>
-                    <p>{request.users_email} (Pending)</p>
-                    <button onClick={() => acceptJoinRequest(group.id, request.users_id)}>Accept</button>
-                    <button onClick={() => declineJoinRequest(group.id, request.users_id)}>Decline</button>
-                  </li>
-                ))
-              ) : (
-                <p>No pending requests.</p>
-              )}
-            </ul>
-          </>
-        )}
+                {/* Display join requests only if the current user is the owner */}
+                {isOwner && (
+                  <>
+                    <h3>Pending Join Requests</h3>
+                    <ul>
+                      {group.joinRequests.length > 0 ? (
+                        group.joinRequests.map((request) => (
+                          <li key={request.request_id}>
+                            <p>{request.users_email} (Pending)</p>
+                            <button onClick={() => acceptJoinRequest(group.id, request.users_id)}>Accept</button>
+                            <button onClick={() => declineJoinRequest(group.id, request.users_id)}>Decline</button>
+                          </li>
+                        ))
+                      ) : (
+                        <p>No pending requests.</p>
+                      )}
+                    </ul>
+                  </>
+                )}
 
                 {/* Admin Delete Button */}
                   <div className={styles["delete-leave-back-button-container"]}>
@@ -306,124 +275,115 @@ const handleDelete = async (movieId) => {
                             
                       </div>
                           
-                  {searchPerformed ? (
-                      uniqueFilteredMovies.length === 0 ? (
-                        <p>No movies or TV series found.</p>
-                      ) : (
-                        uniqueFilteredMovies.map((item) => (
-                          <div key={item.id || item.name} className={styles['searchedmovie-container']}>
-                            <h1>Movies Searched for Group: {group.name}</h1>
-                            <div className={styles['productcards_container']}>
-                              <div className={styles['product-card-framework']}>
-                                <div className={styles['image-container']}>
-                                  <img
-                                    className={styles['product-card']}
-                                    src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                                    alt={item.name || item.title || "Untitled"}
-                                  />
-                                </div>
-                                <div className={styles['text-container']}>
-                                  <h5>
-                                    {item.name?.length > 17
-                                      ? `${item.name.slice(0, 17)}...`
-                                      : item.title?.length > 17
-                                      ? `${item.title.slice(0, 17)}...`
-                                      : item.name || item.title || "Untitled"}
-                                  </h5>
-                                  <p>
-                                    {item.overview
-                                      ? `${item.overview.slice(0, 17)}...`
-                                      : "No description"}
-                                  </p>
-                                  <div className={styles['button-container']}>
-                                    <button onClick={(e) => handleAddMovieToGroup(e, item)} className={styles['button-click']}>
-                                      Add to Group List
-                                    </button>
+                      {uniqueFilteredMovies.length > 0 ? (
+                        <div className={styles['searchedmovie-container']}> 
+                          <h1>Movies Searched for Group: {group.name}</h1>
+                          
+                          <div className={styles['productcards_container']}>
+                            {searchPerformed ? (
+                              uniqueFilteredMovies.length === 0 ? (
+                                <p>No movies or TV series found.</p>
+                              ) : (
+                                // Display filtered movies
+                                uniqueFilteredMovies.map((item) => (
+                                  <div
+                                    key={`${item.id}-${item.name}`} // Combine id and name to ensure uniqueness
+                                    className={styles['product-card-framework']}
+                                  >
+                                    <div className={styles['image-container']}>
+                                      <img
+                                        className={styles['product-card']}
+                                        src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                                        alt={item.name}
+                                      />
+                                    </div>
+                                    <div className={styles['text-container']}>
+                                      <h5>{item.name.length > 17 ? `${item.name.slice(0, 17)}...` : item.name}</h5>
+                                      <p>{item.first_air_date}</p>
+                                      <div className={styles['button-container']}>
+                                        <div className={styles['addfavourites-button-container']}>
+                                          <button onClick={(e) => handleAddMovieToGroup(e, item)} className={styles['button-click']}>
+                                            Add to Group List
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
+                                ))
+                              )
+                            ) : (
+                              <div className={styles['reminder-container']}>
+                                <p >Please enter a search term to find movies or TV series.</p>
                               </div>
-                            </div>
+                            )}
                           </div>
-                        ))
-                      )
-                    ) : (
-                      <div className={styles['reminder-container']}>
-                        <p>Please enter a search term to find movies or TV series.</p>
-                      </div>
-                    )}
+                        </div>
+                      ) : (
+                        // When there are no filtered movies to display
+                        <p>No movies found for this group.</p>
+                      )}
+          
 
 
               
 
+           
+              
 
-
-
-          {groupMovie.length > 0 ? (
-            <div className={styles['searchedmovie-container']}>
-              <h1>Movie List for Group: {group.name}</h1>
-
-              {/* Render the list of movies */}
-              <div className={styles['productcards_container']}>
-                {groupMovie.map((movie) => (
-                  <div key={movie.id} className={styles['product-card-framework']}>
-                    <div className={styles['image-container']}>
-                      <img
-                        className={styles['product-card']}
-                        src={movie.movie_poster_path} // Update the image path field name
-                        alt={movie.movie_title} // Update the title field name
-                      />
-                    </div>
-                    <div className={styles['text-container']}>
-                      <h5>
-                        {(movie.movie_title && movie.movie_title.length > 17)
-                          ? `${movie.movie_title.slice(0, 17)}...`
-                          : (movie.movie_title && movie.movie_title.length > 17)
-                            ? `${movie.movie_title.slice(0, 17)}...`
-                            : movie.movie_title || movie.movie_title}
-                      </h5>
-                      {/* <h5>{movie.movie_title.length > 17 ? `${movie.movie_title.slice(0, 17)}...` : movie.movie_title}</h5> Update the title field name */}
-                      {/* <p>{movie.first_air_date || movie.release_date}</p> */}
-                      <p>
-                        {movie.post_content
-                          ? `${movie.post_content.slice(0, 17)}...`
-                          : "No description"}
-                      </p>
-
-                      <div className={styles['addfavourites-button-container']}>
-                        < button className={styles['button-click']} onClick={() => handleDelete(movie.movie_id)}>
-                          Delete Movie
-                        </button>
-                      </div>
+              {groupMovie.length > 0 ? (
+                  <div className={styles['searchedmovie-container']}>
+                    <h1>Movie List for Group: {group.name}</h1>
+                    
+                    {/* Render the list of movies */}
+                    <div className={styles['productcards_container']}>
+                      {groupMovie.map((movie) => (
+                        <div key={movie.id} className={styles['product-card-framework']}>
+                          <div className={styles['image-container']}>
+                            <img
+                              className={styles['product-card']}
+                              src={movie.movie_poster_path} // Update the image path field name
+                              alt={movie.movie_title} // Update the title field name
+                            />
+                          </div>
+                          <div className={styles['text-container']}>
+                          {/* {item.name.length > 17 ? `${item.name.slice(0, 17)}...` : item.name} */}
+                            <h5> {movie.movie_title.length > 17 ? `${movie.movie_title.slice(0, 17)}...` : movie.movie_title}</h5> {/* Update the title field name */}
+                            {/* <p>{movie.post_content || "No description available."}</p> Update the description field */}
+                            <div className={styles['addfavourites-button-container']}>
+                              <button onClick={(e) => handleAddMovieToGroup(e, movie)} className={styles['button-click1']}>
+                                Delete Movie
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            // Add a message or a placeholder when no movies are in the group
-            <p>No movies for your group.</p>
-          )}
+                ) : (
+                  // Add a message or a placeholder when no movies are in the group
+                  <p>No movies for your group.</p>
+                )}
 
+         
+           
+              {isOwner && (
+                <button  onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
+              )}
 
+              {/* Member Leave Group Button */}
+              {!isOwner && (
+                <button onClick={() => handleLeaveGroup(group.id)}>Leave Group</button>
+              )}
 
-          {isOwner && (
-            <button onClick={() => handleDeleteGroup(group.id)}>Delete Group</button>
-          )}
+              <button onClick={() => navigate("/group")}>Back to Groups</button>
+          </div>
 
-          {/* Member Leave Group Button */}
-          {!isOwner && (
-            <button onClick={() => handleLeaveGroup(group.id)}>Leave Group</button>
-          )}
-
-          <button onClick={() => navigate("/group")}>Back to Groups</button>
-        </div>
-
-      </div>
-
+          </div>
+     
       <Footer />
-
+ 
     </div>
-
+    
   );
 
 }
