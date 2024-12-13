@@ -25,15 +25,15 @@ This project is designed for movie enthusiasts, providing features to search for
   - **Render**: Handles the backend services, ensuring smooth server-side operations and API integration.
   - **Supabase**: Serves as the database platform, providing real-time data synchronization.
 
-## Project Team Roles and Responsibilities
+## Project Team Responsibilities
 
 - Yanwen He: Movies- and TVSeries Page, Showtimes,DetailPage, search/filter functionality
 - Ke Zhang: SignUp, SignIn, DeleteAccount
-- Suheda Sener: Reviews, Homepage, Testing
+- Suheda Sener: Reviews, Homepage, Testing, Deployment
 - Shromona Hossain: Homepage
 - Thanh Nghi Vu Vo: Grouppage
 - Seraj Shekh: Grouppage
-- Robin Holzheuer: Profile-/Favoritespage, SharedFavorites-Page, UserListPage
+- Robin Holzheuer: Profile-/Favoritespage, SharedFavorites-Page, UserListPage, Deployment
 
 ## Database Structure
 
@@ -91,7 +91,7 @@ JWT_SECRET=a_secret_key_used_to_sign_JWT_tokens_for_authentication`
 ### Frontend (.env)
 `
 REACT_APP_API_KEY=your_tmdb_api_key
-REACT_APP_BACKEND_URL=http://localhost:DB_PORT`
+REACT_APP_BACKEND_URL=http://localhost:PORT`
 
 ## 4. Running the Backend Server
 `cd ./backend`   # Navigate to the backend  directory  

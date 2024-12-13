@@ -23,7 +23,6 @@ const TVSerial = () => {
 
     const [selectGenre, setSelectGenre] = useState('')   
     const [selectYear, setSelectYear] = useState('');
-    const [selectPopularity, setSelectPopularity] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
  
 
@@ -35,9 +34,6 @@ const TVSerial = () => {
         setSelectYear(date)
     };
 
-    const handlePopularityChange = (event) => {
-        setSelectPopularity(event.target.value);
-    };
 
     const handleSearchQueryChange = (event) => {
         setSearchQuery(event.target.value);
@@ -61,10 +57,6 @@ const TVSerial = () => {
             }
         }
 
-        // Rating filter: Implement if necessary
-        if (selectPopularity && movie.popularity <= selectPopularity) {
-            isMatch = false;
-        }
         // Search filter: Check if search query matches the movie title
         if (searchQuery && !movie.name.toLowerCase().includes(searchQuery.toLowerCase())) {
             isMatch = false;
@@ -78,7 +70,7 @@ const TVSerial = () => {
             {/* <div className={styles['nav-herosection']}> */}
             <div className={`${styles['nav-herosection']}`}>
                 <Navigation />               
-                <HeroSection type="tvserial"  />
+                <HeroSection type="tvseries"  />
            
             </div>
             {/* <div className={styles['allfilter-container']}> */}

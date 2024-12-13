@@ -18,14 +18,6 @@ const Navitation = () => {
     setHamburgerMenuMenu((prevState) => !prevState);
   }
 
-  // }
-
-  // function hamburgerMenuClickedHandler() {
-  //   setHamburgerMenuMenu((prevState) => {
-  //     console.log("Hamburger menu toggled: ", !prevState);
-  //     return !prevState;
-  //   });
-  // }
 
   const TVGenreData = useContext(TVGenreContext)
   const MovieGenreData = useContext(MovieGenreContext)
@@ -33,9 +25,7 @@ const Navitation = () => {
     navigate("/showtime")
   }
 
-  function signinclickedHandler() {
-    navigate("/showtime")
-  }
+
   function tvserialClickHandler() {
     navigate('/tvserial')
 
@@ -101,7 +91,7 @@ const Navitation = () => {
           <ul className={`${hamburgerMenu ? styles["show-menu"] : styles["hide-menu"]}`}>
             <li className={styles["nav-link"]}><Link onClick={homeclickedHandler} to="/">Home</Link></li>
             <li className={styles["nav-link"]}><Link onClick={movieclickHandler} to="/movies">Movies</Link></li>
-            <li className={styles["nav-link"]}><Link onClick={tvserialClickHandler} to="/tvserial">TV Serial</Link></li>
+            <li className={styles["nav-link"]}><Link onClick={tvserialClickHandler} to="/tvserial">TV Series</Link></li>
             <li className={styles["nav-link"]}><Link onClick={showtimeClickHandler} to="/showtime">Show Time</Link></li>
             <li className={styles["nav-link"]}><Link onClick={profileclickHandler} to="/profile">Profile Page</Link></li>
             <li className={styles["nav-link"]}><Link onClick={homeclickedHandler} to="/group">Group Page</Link></li>
@@ -112,7 +102,7 @@ const Navitation = () => {
           <ul className={`${hamburgerMenu ? styles["show-menu"] : styles["hide-menu"]}`}>
             <li className={styles["nav-link"]}><Link onClick={homeclickedHandler} to="/">Home</Link></li>
             <li className={styles["nav-link"]}><Link onClick={movieclickHandler} to="/movies">Movies</Link></li>
-            <li className={styles["nav-link"]}><Link onClick={tvserialClickHandler} to="/tvserial">TV Serial</Link></li>
+            <li className={styles["nav-link"]}><Link onClick={tvserialClickHandler} to="/tvserial">TV Series</Link></li>
             <li className={styles["nav-link"]}> <Link onClick={showtimeClickHandler} to="/showtime">Show Time</Link></li>
             <li className={styles["nav-link"]}>
               <Link to="/sign-in">Sign In</Link> | <Link to="/sign-up">Sign Up</Link>
@@ -142,6 +132,7 @@ const Navitation = () => {
             {MovieGenreData && MovieGenreData.length > 0 ? (
               MovieGenreData.map((genre) => (
                 <li key={genre.id}>
+                  
                   <a href="" onClick={() => MoviegenreInNavigationBar(genre)}>{genre.name}</a>
                 </li>
               ))
@@ -153,7 +144,7 @@ const Navitation = () => {
 
 
         <li className={styles["nav-link"]} id="li1">
-          <Link onClick={tvserialClickHandler} to="/tvserial"> TV Serial</Link>
+          <Link onClick={tvserialClickHandler} to="/tvserial"> TV Series</Link>
 
           <span style={{ verticalAlign: 'middle', position: 'relative', top: '-4px' }}>&#8964;</span>
           <ul className={styles["dropdown1"]}>
