@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState,useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import GroupContext from "../context/GroupProvider";
 import UserContext from "../context/UserContext"; // Import UserContext to get current user
@@ -9,74 +9,65 @@ import Footer from "../components/Footer"
 // import TVCards from "../components/TVCards"
 // import MovieCards from "../components/MovieCards";
 import { MoiveTVSerialContext } from "../context/MoiveTVSerialProvider"
-import { RiAlignItemBottomLine } from "react-icons/ri";
 import api from "../services/api";
-const GroupDetailsPage = ({ groupId }) => {
-  const { id } = useParams(); // Get the group ID from the URL
-  const { fetchGroupDetails, removeMember, acceptJoinRequest, declineJoinRequest, leaveGroup, deleteGroup, addMovieToGroup } = useContext(GroupContext);
+const GroupDetailsPage = () => {
+  // const { id } = useParams(); // Get the group ID from the URL
+  const { fetchGroupDetails, removeMember, acceptJoinRequest, declineJoinRequest, leaveGroup, deleteGroup } = useContext(GroupContext);
   const { user } = useContext(UserContext); // Access user context
   const [group, setGroup] = useState(null);
+ 
+  const { id: groupId } = useParams(); 
 
   const navigate = useNavigate();
 
   // Fetch the group details when the component mounts
-  useEffect(() => {
-    const fetchData = async () => {
-      const groupData = await fetchGroupDetails(id); // Fetch details by group ID
-      setGroup(groupData);
-    
-    };
-    fetchData();
-  }, [id, fetchGroupDetails]);
-
-
-  // heyanwen has added for the search functionality , add fnctionality and display functionality
-
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [groupMovie, setGroupMovie] = useState([]);
-
-const movieTVSerialData = useContext(MoiveTVSerialContext); 
-
-
-const fetchMovies = async (groupId) => {
-  try {
-    // Use axios to make the GET request to fetch the movies for the group
-    const response = await api.get(`/groups/${groupId}/movies`);
-
-    // Check if the fetch request is successful
-    if (response.status === 200) { 
-      const uniqueMovies = response.data.movies.filter((movie, index, self) =>
-        index === self.findIndex((m) => m.id === movie.id)
-      );
-      setGroupMovie(uniqueMovies);
-      console.log(`This is the response.data.movies  : ${uniqueMovies}`)
-    } else {
-      alert("Failed to fetch movie list.");
-    }
-  } catch (error) {
-    console.error("Error fetching movies:", error);
-    alert("Failed to fetch movie list. Please try again.");
-  }
-};
-
-// Use effect to fetch group and movie data when groupId changes
-useEffect(() => {
-  const fetchData = async () => {
+  const movieTVSerialData = useContext(MoiveTVSerialContext); 
+  const fetchMovies = useCallback(async (groupId) => {
     try {
-      const groupResponse = await api.get(`/groups/${groupId}`);
-      setGroup(groupResponse.data);
-      fetchMovies(groupId);
+      const response = await api.get(`/groups/${groupId}/movies`);
+      if (response.status === 200) {
+        const uniqueMovies = response.data.movies.filter((movie, index, self) =>
+          index === self.findIndex((m) => m.id === movie.id)
+        );
+        setGroupMovie(uniqueMovies);
+        console.log("Fetched unique movies:", uniqueMovies);
+      } else {
+        console.error("Unexpected response status:", response.status);
+        alert("Failed to fetch movie list.");
+      }
     } catch (error) {
-      console.error('Error fetching group details:', error);
-      alert('Failed to fetch group details.');
+      console.error("Error fetching movies:", error);
+      alert("Failed to fetch movie list. Please try again.");
     }
-  };
+  }, []);
 
-    if (groupId) {
-      fetchData();
-    }
-  }, [groupId]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!groupId) {
+        console.error("Group ID is undefined or null.");
+        return;
+      }
+      try {
+        const groupData = await fetchGroupDetails(groupId); 
+        setGroup(groupData);
+        await fetchMovies(groupId); 
+      } catch (error) {
+        console.error("Error fetching group data or movies:", error);
+      }
+    };
+    fetchData();
+  }, [groupId, fetchGroupDetails, fetchMovies]);
+
+  if (!group) {
+    return <div>Loading group details...</div>;
+  }
+
+  
+
 
 const handleInputChange = (event) => {
   setSearchPerformed(false)
@@ -111,8 +102,8 @@ const uniqueFilteredMovies = combinedFilteredResults.filter(
   const handleAddMovieToGroup = async (e, movie) => {
     e.preventDefault();
     try {
-      const userId = user.id; // Assume available in context or state
-      const groupId = group.id; // Assume available in context or state
+      const userId = user.id; 
+      const groupId = group.id;
 
       console.log("User ID:", userId);
       console.log("Group ID:", groupId);
@@ -153,6 +144,27 @@ const uniqueFilteredMovies = combinedFilteredResults.filter(
     }
 
 }
+
+
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const groupData = await fetchGroupDetails(groupId);
+//       setGroup(groupData);
+//       fetchMovies(groupId);
+//     } catch (error) {
+//       console.error("Error fetching group details:", error);
+//     }
+//   };
+
+//   if (groupId) {
+//     fetchData();
+//   }
+// }, [groupId, fetchGroupDetails, fetchMovies]);
+
+
+
+
 // /:groupId/delete-movies/:movieId
 const handleDelete = async (movieId) => {
   const userId= user.id;

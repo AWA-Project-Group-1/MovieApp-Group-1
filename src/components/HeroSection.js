@@ -1,17 +1,11 @@
 
 import React, { useContext,useState, useEffect} from 'react';
-import { Link  } from "react-router-dom";
 import styles from "./HeroSection.module.css";
 // import { TVSeriesContext } from '../context/TVSeriesProvider';
 import { MoiveTVSerialContext } from "../context/MoiveTVSerialProvider"
 
 const HeroSection = ({type}) => {
   const moiveTVSerialData = useContext(MoiveTVSerialContext) 
-  // const { tvormovie } = useParams();
-  // console.log(`This is the ${tvormovie}`); 
-  // console.log("Params object:", useParams());
-
- 
 
   const backgroundImageforTV = moiveTVSerialData.tvSeries?.map(series => 
     `https://image.tmdb.org/t/p/original${series.backdrop_path}`
@@ -23,7 +17,7 @@ const HeroSection = ({type}) => {
   
 
     //   : "";
-    const images = type === "tvserial" ? backgroundImageforTV  : backgroundImageforMovie;
+    const images = type === "tvseries" ? backgroundImageforTV  : backgroundImageforMovie;
 
     // State to track the current image index
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
